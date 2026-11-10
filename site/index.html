@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aerotherm | Nano-silica aerogel boards against thermal propagation in EV and ESS batteries</title>
+<meta name="description" content="Aerotherm, founded in October 2026 in Pyeongtaek, Republic of Korea, develops nano-silica boards made with aerogel. Placed between battery cells, they suppress or stop thermal propagation, including heat transfer by thermal radiation.">
+<meta name="theme-color" content="#FFFFFF">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aerotherm | One failing cell should stay one failing cell.">
+<meta property="og:description" content="Nano-silica aerogel boards for the rechargeable batteries in electric vehicles and energy storage systems.">
+<script>document.documentElement.className = 'js';</script>
+<script>
+/* Preload the two fonts. Font preloads must be CORS requests, which browsers refuse for file:// pages,
+   so the links are added only when the page comes from a server; from disk the fonts load through @font-face. */
+if (location.protocol !== 'file:') {
+  ['assets/fonts/Manrope.woff2', 'assets/fonts/Inter.woff2'].forEach(function (href) {
+    var link = document.createElement('link');
+    link.rel = 'preload'; link.as = 'font'; link.type = 'font/woff2'; link.crossOrigin = 'anonymous'; link.href = href;
+    document.head.appendChild(link);
+  });
+}
+</script>
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23102A43'/%3E%3Cpath d='M8 8v16M24 8v16' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M16 6v20' stroke='%23438CCB' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="wordmark" href="#top" aria-label="Aerotherm, back to top">AEROTHERM</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="visually-hidden">Open menu</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#technology">Technology</a></li>
+        <li><a href="#product">Product</a></li>
+        <li><a href="#applications">Applications</a></li>
+        <li><a href="#rd">R&amp;D</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <a href="#" lang="ko" hreflang="ko" aria-label="한국어 (Korean)">KO</a>
+      <span aria-hidden="true">/</span>
+      <a href="#" hreflang="en" aria-current="true" aria-label="English, current language">EN</a>
+    </div>
+    <a class="btn btn--primary btn--header" href="#contact">Contact us</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ Hero ============ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container">
+      <p class="eyebrow">Materials engineered for thermal containment</p>
+      <h1 id="hero-title">One failing cell should stay one failing cell.</h1>
+      <div class="hero__grid">
+        <div class="hero__text">
+          <p class="hero__lead">Nano-silica aerogel boards for the rechargeable batteries in electric vehicles and energy storage systems.</p>
+          <p class="hero__sub">Typical aerogel insulation mainly suppresses convection. Aerotherm keeps that and is also <strong>highly effective against thermal radiation</strong>, a major heat path between cells at thermal-runaway temperatures.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#technology">Explore our technology</a>
+            <a class="btn btn--outline" href="#contact">Request a sample
+              <svg class="btn__arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+        <figure class="hero__figure" data-prop-hero>
+          <div class="prop" data-variant="with" data-still="32">
+            <canvas class="prop__canvas" width="880" height="675" role="img" aria-label="Animation: five battery cells stand side by side with an Aerotherm board between each pair. The middle cell overheats and turns red. Heat and infrared rays reach the boards on both sides and stop there. The neighboring cells stay blue, and the failed cell cools to a dark ember."></canvas>
+            <span class="loader" aria-hidden="true"><span class="loader__track"></span><span class="loader__fill"></span><span class="loader__barrier"></span></span>
+            <noscript><img class="prop__fallback" src="assets/img/hero-frame-32.png" width="1200" height="675" alt="Five battery cells with Aerotherm boards between them. The middle cell is red-hot and infrared rays strike the boards on both sides, which glow at their edges while the neighboring cells stay blue."></noscript>
+          </div>
+          <figcaption>
+            <span class="eyebrow">Heat held at the intercell boards</span>
+            <button class="icon-btn" type="button" data-toggle>
+              <svg class="i-pause" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" focusable="false"><rect x="1.5" y="1" width="3" height="10" rx="1"/><rect x="7.5" y="1" width="3" height="10" rx="1"/></svg>
+              <svg class="i-play" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" focusable="false"><path d="M2.5 1.2v9.6a.6.6 0 0 0 .9.5l8-4.8a.6.6 0 0 0 0-1l-8-4.8a.6.6 0 0 0-.9.5z"/></svg>
+              <span data-toggle-label>Pause animation</span>
+            </button>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ About ============ -->
+  <section class="section" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <div class="about__grid">
+        <div>
+          <p class="eyebrow">About Aerotherm</p>
+          <h2 id="about-title">A materials company. A&nbsp;focused purpose.</h2>
+        </div>
+        <div class="about__body">
+          <p>Founded in October 2026 in Pyeongtaek, Republic of Korea, Aerotherm researches and develops nano-silica boards made with aerogel.</p>
+          <p>Our flagship product, also called Aerotherm, goes between the cells of the rechargeable batteries used in EVs and ESS. When a battery fault sends one cell into thermal runaway, the board is there to suppress or stop thermal propagation to the neighboring cells and to neighboring ESS containers.</p>
+          <div class="about__edge">
+            <h3>Where Aerotherm differs: thermal radiation</h3>
+            <p>Typical aerogel insulation mainly suppresses heat transfer by convection. Aerotherm keeps that and is also highly effective at suppressing heat transfer by thermal radiation.</p>
+            <p>That matters because radiative heat transfer rises with the fourth power of absolute temperature. At thermal-runaway temperatures, radiation becomes a major path for heat between cells.</p>
+          </div>
+        </div>
+      </div>
+
+      <ul class="features">
+        <li class="feature">
+          <svg class="icon" viewBox="0 0 192 192" aria-hidden="true" focusable="false">
+            <path class="ln" d="M68 42h56M77 42v48l-32 54q-5 11 7 11h88q12 0 7-11l-32-54V42M61 124h70"/>
+            <circle class="ln-blue ic-bob d3" cx="96" cy="105" r="4"/>
+            <circle class="dot-blue ic-bob" cx="80" cy="140" r="3.4"/>
+            <circle class="dot-blue ic-bob d1" cx="96" cy="143" r="3.4"/>
+            <circle class="dot-blue ic-bob d2" cx="112" cy="140" r="3.4"/>
+          </svg>
+          <div>
+            <h3>Materials R&amp;D</h3>
+            <p>Nano-silica boards made with aerogel</p>
+          </div>
+        </li>
+        <li class="feature">
+          <svg class="icon" viewBox="0 0 192 192" aria-hidden="true" focusable="false">
+            <path class="ln ic-sway" d="M42 67q8-6 16 0t16 0 16 0 12-2"/>
+            <path class="ln ic-sway d1" d="M42 97q8-6 16 0t16 0 16 0 12-2"/>
+            <path class="ln ic-sway d2" d="M42 127q8-6 16 0t16 0 16 0 12-2"/>
+            <path class="ln-blue ic-turn" d="M104 70L93 58m9 0h-9v9"/>
+            <path class="ln-blue ic-turn d1" d="M104 100L93 88m9 0h-9v9"/>
+            <path class="ln-blue ic-turn d2" d="M104 130l-11-12m9 0h-9v9"/>
+            <path class="ln" d="M114 41v110"/>
+            <path class="ln-blue" d="M125 41v110"/>
+          </svg>
+          <div>
+            <h3>Heat-path control</h3>
+            <p>Convection and thermal radiation</p>
+          </div>
+        </li>
+        <li class="feature">
+          <svg class="icon" viewBox="0 0 192 192" aria-hidden="true" focusable="false">
+            <rect class="ln" x="40" y="52" width="39" height="94" rx="5"/>
+            <rect class="ln" x="116" y="52" width="39" height="94" rx="5"/>
+            <path class="ln" d="M51 43h17M127 43h17"/>
+            <path class="ln-blue" d="M94 41v111M102 41v111"/>
+            <circle class="dot-warm ic-pulse" cx="86.5" cy="97" r="3.4"/>
+          </svg>
+          <div>
+            <h3>Cell-to-cell protection</h3>
+            <p>For EV and ESS batteries</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ Technology ============ -->
+  <section class="section section--tint" id="technology" aria-labelledby="technology-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Technology</p>
+        <h2 id="technology-title">Engineered across heat paths.</h2>
+        <p class="lead">A nanoporous silica network limits convection and conduction. Infrared opacifiers mixed into the nano-silica take on radiation, the heat path that rises with the fourth power of absolute temperature.</p>
+      </div>
+
+      <div class="card-grid card-grid--2">
+
+        <!-- 1. Knudsen -->
+        <article class="card principle">
+          <h3>Nanopores &amp; the Knudsen effect</h3>
+          <figure class="principle__fig">
+            <svg class="fig-knudsen" viewBox="80 56 800 418" role="img" aria-label="Diagram: seven small pores, each holding one air molecule that bounces from wall to wall. A dashed reference line labelled about 70 nanometres, the mean free path of air, is longer than any pore.">
+              <rect x="94" y="70" width="772" height="390" rx="24" fill="#E0E9EF" stroke="#CFDDE6" stroke-width="2"/>
+              <g fill="#F6F9FB" stroke="#6F8FA4" stroke-width="3.5">
+                <ellipse cx="215" cy="177" rx="75" ry="56"/>
+                <ellipse cx="397" cy="177" rx="68" ry="56"/>
+                <ellipse cx="573" cy="177" rx="73" ry="56"/>
+                <ellipse cx="745" cy="177" rx="66" ry="55"/>
+                <ellipse cx="306" cy="339" rx="74" ry="57"/>
+                <ellipse cx="488" cy="339" rx="76" ry="57"/>
+                <ellipse cx="677" cy="339" rx="73" ry="57"/>
+              </g>
+              <path d="M288 258h383" fill="none" stroke="#405363" stroke-width="2.5" stroke-dasharray="9 7"/>
+              <path d="M288 244v28M671 244v28" fill="none" stroke="#405363" stroke-width="2.5"/>
+              <rect x="408" y="234" width="144" height="48" rx="8" fill="#F6F9FB"/>
+              <text class="fig-label" x="480" y="269" text-anchor="middle" font-size="31">~70 nm</text>
+              <g>
+                <circle class="mol" r="7" style="--ax:279px;--ay:185px;--bx:166px;--by:208px;--cx:198px;--cy:130px"/>
+                <circle class="mol" r="7" style="--ax:407px;--ay:224px;--bx:342px;--by:161px;--cx:442px;--cy:146px"/>
+                <circle class="mol" r="7" style="--ax:511px;--ay:169px;--bx:604px;--by:135px;--cx:604px;--cy:219px"/>
+                <circle class="mol" r="7" style="--ax:726px;--ay:133px;--bx:798px;--by:193px;--cx:709px;--cy:213px"/>
+                <circle class="mol" r="7" style="--ax:355px;--ay:371px;--bx:243px;--by:348px;--cx:317px;--cy:291px"/>
+                <circle class="mol" r="7" style="--ax:477px;--ay:387px;--bx:446px;--by:301px;--cx:552px;--cy:330px"/>
+                <circle class="mol" r="7" style="--ax:618px;--ay:356px;--bx:698px;--by:293px;--cx:721px;--cy:374px"/>
+              </g>
+            </svg>
+            <figcaption>Wall collisions limit heat transfer</figcaption>
+          </figure>
+          <p>The pores inside the board are smaller than the mean free path of air molecules, about 70&nbsp;nm at room temperature. Molecules hit the pore walls far more often than each other, so convection and conduction through the air are strongly suppressed.</p>
+        </article>
+
+        <!-- 2. Solid conduction -->
+        <article class="card principle">
+          <h3>Low solid conduction</h3>
+          <figure class="principle__fig">
+            <svg class="fig-solid" viewBox="60 70 850 380" role="img" aria-label="Diagram: a sparse network of thin silica branches. Warm pulses enter on the left and fade as they travel along the long, narrow paths, leaving the far side cool.">
+              <g fill="none" stroke-linecap="round">
+                <path stroke="#D3E1EA" stroke-width="11" d="M97 268L228 174 399 252 249 362zM399 252L464 101 737 120 872 250 773 366 508 415zM399 252l215-13L737 120M614 239l159 127"/>
+                <path stroke="#7FA8BF" stroke-width="2" d="M97 268L228 174 399 252 249 362zM399 252L464 101 737 120 872 250 773 366 508 415zM399 252l215-13L737 120M614 239l159 127"/>
+              </g>
+              <g>
+                <circle class="pulse" r="5.5" style="--x0:97px;--y0:268px;--x1:228px;--y1:174px;--a:1;--d:0s"/>
+                <circle class="pulse" r="5.5" style="--x0:97px;--y0:268px;--x1:249px;--y1:362px;--a:1;--d:-1.2s"/>
+                <circle class="pulse" r="5.5" style="--x0:228px;--y0:174px;--x1:399px;--y1:252px;--a:.8;--d:-.5s"/>
+                <circle class="pulse" r="5.5" style="--x0:249px;--y0:362px;--x1:399px;--y1:252px;--a:.8;--d:-1.7s"/>
+                <circle class="pulse" r="5.5" style="--x0:399px;--y0:252px;--x1:464px;--y1:101px;--a:.55;--d:-1s"/>
+                <circle class="pulse" r="5.5" style="--x0:399px;--y0:252px;--x1:614px;--y1:239px;--a:.55;--d:-.2s"/>
+                <circle class="pulse" r="5.5" style="--x0:399px;--y0:252px;--x1:508px;--y1:415px;--a:.55;--d:-1.5s"/>
+                <circle class="pulse" r="5.5" style="--x0:464px;--y0:101px;--x1:737px;--y1:120px;--a:.32;--d:-.6s"/>
+                <circle class="pulse" r="5.5" style="--x0:614px;--y0:239px;--x1:737px;--y1:120px;--a:.32;--d:-1.9s"/>
+                <circle class="pulse" r="5.5" style="--x0:614px;--y0:239px;--x1:773px;--y1:366px;--a:.32;--d:-1.1s"/>
+                <circle class="pulse" r="5.5" style="--x0:508px;--y0:415px;--x1:773px;--y1:366px;--a:.32;--d:-.3s"/>
+                <circle class="pulse" r="5.5" style="--x0:737px;--y0:120px;--x1:872px;--y1:250px;--a:.15;--d:-1.4s"/>
+                <circle class="pulse" r="5.5" style="--x0:773px;--y0:366px;--x1:872px;--y1:250px;--a:.15;--d:-.8s"/>
+              </g>
+              <g fill="#D6E6EF" stroke="#7FA8BF" stroke-width="2">
+                <circle cx="97" cy="268" r="13"/><circle cx="228" cy="174" r="13"/><circle cx="249" cy="362" r="13"/>
+                <circle cx="399" cy="252" r="13"/><circle cx="464" cy="101" r="13"/><circle cx="508" cy="415" r="13"/>
+                <circle cx="614" cy="239" r="13"/><circle cx="737" cy="120" r="13"/><circle cx="872" cy="250" r="13"/>
+                <circle cx="773" cy="366" r="13"/>
+              </g>
+            </svg>
+            <figcaption>Long, narrow paths through silica</figcaption>
+          </figure>
+          <p>Silica (SiO<sub>2</sub>) conducts heat poorly, and the board's porous solid structure leaves heat very few paths through the solid.</p>
+        </article>
+
+        <!-- 3. Radiation -->
+        <article class="card principle principle--edge">
+          <div class="card__head">
+            <h3>Radiation blocking</h3>
+            <span class="tag">Where Aerotherm differs</span>
+          </div>
+          <div class="principle__fig rad-compare">
+            <figure class="rad-compare__col">
+              <h4>Typical aerogel</h4>
+              <svg class="fig-rad" viewBox="60 100 480 330" role="img" aria-label="Diagram: rising convection shimmer stops at a plain aerogel board, while horizontal infrared waves arrive on the left and continue on the right.">
+                <defs>
+                  <path id="rad-wave" d="M-96 0q24-10 48 0t48 0 48 0 48 0 48 0 48 0 48 0 48 0"/>
+                  <path id="rad-shimmer" d="M0 0q7 16 0 32t0 32 0 32 0 32 0 32 0 32 0 32"/>
+                  <clipPath id="rad-clip-in"><rect x="70" y="120" width="196" height="290"/></clipPath>
+                  <clipPath id="rad-clip-out"><rect x="356" y="120" width="162" height="290"/></clipPath>
+                  <clipPath id="rad-clip-shimmer"><rect x="215" y="266" width="60" height="140"/></clipPath>
+                </defs>
+                <g clip-path="url(#rad-clip-shimmer)"><g class="shimmer-move">
+                  <use class="shimmer" href="#rad-shimmer" x="231" y="266"/><use class="shimmer" href="#rad-shimmer" x="244" y="250"/><use class="shimmer" href="#rad-shimmer" x="257" y="266"/>
+                </g></g>
+                <g clip-path="url(#rad-clip-in)"><g class="ir-move">
+                  <use class="ir" href="#rad-wave" x="70" y="158"/><use class="ir" href="#rad-wave" x="70" y="207"/><use class="ir" href="#rad-wave" x="70" y="255"/><use class="ir" href="#rad-wave" x="70" y="300"/><use class="ir" href="#rad-wave" x="70" y="346"/>
+                </g></g>
+                <path class="ir" d="M268 152l10 6-10 6M268 201l10 6-10 6M268 249l10 6-10 6M268 294l10 6-10 6M268 340l10 6-10 6"/>
+                <rect class="board" x="280" y="115" width="70" height="300" rx="5"/>
+                <g clip-path="url(#rad-clip-out)"><g class="ir-move">
+                  <use class="ir" href="#rad-wave" x="354" y="158"/><use class="ir" href="#rad-wave" x="354" y="207"/><use class="ir" href="#rad-wave" x="354" y="255"/><use class="ir" href="#rad-wave" x="354" y="300"/><use class="ir" href="#rad-wave" x="354" y="346"/>
+                </g></g>
+                <path class="ir" d="M520 152l10 6-10 6M520 201l10 6-10 6M520 249l10 6-10 6M520 294l10 6-10 6M520 340l10 6-10 6"/>
+              </svg>
+              <p>Mainly suppresses convection</p>
+            </figure>
+            <figure class="rad-compare__col">
+              <h4>Aerotherm</h4>
+              <svg class="fig-rad" viewBox="60 100 480 330" role="img" aria-label="Diagram: at the Aerotherm board, infrared opacifier particles scatter and reflect the incoming infrared waves back toward the source. Convection shimmer also stops at the board, and nothing passes to the other side.">
+                <g clip-path="url(#rad-clip-shimmer)"><g class="shimmer-move">
+                  <use class="shimmer" href="#rad-shimmer" x="231" y="266"/><use class="shimmer" href="#rad-shimmer" x="244" y="250"/><use class="shimmer" href="#rad-shimmer" x="257" y="266"/>
+                </g></g>
+                <g clip-path="url(#rad-clip-in)"><g class="ir-move">
+                  <use class="ir" href="#rad-wave" x="70" y="158"/><use class="ir" href="#rad-wave" x="70" y="207"/><use class="ir" href="#rad-wave" x="70" y="255"/><use class="ir" href="#rad-wave" x="70" y="300"/><use class="ir" href="#rad-wave" x="70" y="346"/>
+                </g></g>
+                <path class="ir" d="M268 152l10 6-10 6M268 201l10 6-10 6M268 249l10 6-10 6M268 294l10 6-10 6M268 340l10 6-10 6"/>
+                <rect class="board" x="280" y="115" width="70" height="300" rx="5"/>
+                <g class="opacifier">
+                  <circle cx="296" cy="136" r="5"/><circle cx="315" cy="136" r="5"/><circle cx="334" cy="136" r="5"/>
+                  <circle cx="296" cy="184" r="5"/><circle cx="315" cy="184" r="5"/><circle cx="334" cy="184" r="5"/>
+                  <circle cx="296" cy="232" r="5"/><circle cx="315" cy="232" r="5"/><circle cx="334" cy="232" r="5"/>
+                  <circle cx="296" cy="280" r="5"/><circle cx="315" cy="280" r="5"/><circle cx="334" cy="280" r="5"/>
+                  <circle cx="296" cy="328" r="5"/><circle cx="315" cy="328" r="5"/><circle cx="334" cy="328" r="5"/>
+                  <circle cx="296" cy="376" r="5"/><circle cx="315" cy="376" r="5"/><circle cx="334" cy="376" r="5"/>
+                </g>
+                <path class="ir ir-back" d="M272 147l-24-19m11 0h-11v10"/>
+                <path class="ir ir-back d1" d="M272 196l-24-19m11 0h-11v10"/>
+                <path class="ir ir-back d2" d="M272 244l-24-19m11 0h-11v10"/>
+                <path class="ir ir-back" d="M272 289l-24-19m11 0h-11v10"/>
+                <path class="ir ir-back d1" d="M272 335l-24-19m11 0h-11v10"/>
+              </svg>
+              <p>Suppresses convection and radiation</p>
+            </figure>
+          </div>
+          <p>Typical aerogel insulation mainly suppresses heat transfer by convection. Aerotherm keeps that, and infrared opacifiers mixed into the nano-silica reflect or scatter the radiant heat produced at high temperatures.</p>
+          <p>Radiative heat transfer rises with the fourth power of absolute temperature, so at thermal-runaway temperatures this is a major path for heat between cells.</p>
+        </article>
+
+        <!-- 4. Conductivity -->
+        <article class="card principle">
+          <h3>Lower conductivity than still air</h3>
+          <div class="kappa">
+            <p class="kappa__title" id="kappa-title">Thermal conductivity, W/m·K</p>
+            <div class="kappa__rows" role="img" aria-labelledby="kappa-title" aria-describedby="kappa-desc">
+              <div class="kappa__row">
+                <span class="kappa__label">Still air <span class="kappa__value">about 0.026</span></span>
+                <span class="kappa__bar"><span class="is-air"></span></span>
+              </div>
+              <div class="kappa__row">
+                <span class="kappa__label">Nano-silica boards <span class="kappa__value">about 0.011–0.023</span></span>
+                <span class="kappa__bar"><span class="is-range"></span><span class="is-low"></span></span>
+              </div>
+            </div>
+            <p class="visually-hidden" id="kappa-desc">Bar chart drawn to scale: still air, about 0.026 at room temperature, is the full bar. Nano-silica insulation boards reach about 0.011 to 0.023, a shorter bar.</p>
+            <p class="kappa__figure">0.011–0.023 W/m·K
+              <small>Typical of nano-silica insulation boards as a material class, not a measured Aerotherm result. Bars are drawn to scale; the hatched part is the range.</small>
+            </p>
+          </div>
+          <p>Nano-silica insulation boards reach about 0.011–0.023&nbsp;W/m·K, lower than still air (about 0.026&nbsp;W/m·K at room temperature). They insulate more than twice as well as styrofoam or glass wool, in a thinner layer.</p>
+          <p class="note">Aerotherm's own measured value: <span class="ph">{{thermal_conductivity}}</span></p>
+        </article>
+      </div>
+
+      <!-- One event. Two outcomes. -->
+      <div class="compare" id="comparison" data-compare>
+        <div class="compare__head">
+          <h3>One event. Two outcomes.</h3>
+          <p class="note">Matched geometry · one shared clock</p>
+        </div>
+        <div class="card-grid card-grid--2">
+          <article class="card">
+            <h4>Without Aerotherm</h4>
+            <div class="prop" data-variant="without" data-still="60">
+              <canvas class="prop__canvas" width="880" height="675" role="img" aria-label="Animation without Aerotherm: five battery cells stand side by side with empty gaps between them. The middle cell overheats and turns red. Heat and infrared rays cross the gaps, the neighboring cells turn red one after another, and the whole module ends in thermal runaway."></canvas>
+              <span class="loader" aria-hidden="true"><span class="loader__track"></span><span class="loader__fill"></span><span class="loader__barrier"></span></span>
+              <noscript><img class="prop__fallback" src="assets/img/without-frame-60.png" width="1200" height="675" loading="lazy" alt="Without Aerotherm, end state: all five battery cells are red-hot and infrared rays cross the empty gaps between them."></noscript>
+            </div>
+            <p>Thermal propagation spreads through the module.</p>
+          </article>
+          <article class="card">
+            <h4>With Aerotherm</h4>
+            <div class="prop" data-variant="with" data-still="32">
+              <canvas class="prop__canvas" width="880" height="675" role="img" aria-label="Animation with Aerotherm: the same five cells with an Aerotherm board between each pair. The middle cell overheats and turns red. Heat and infrared rays reach the boards on both sides and stop there. The neighboring cells stay blue, and the failed cell cools to a dark ember."></canvas>
+              <span class="loader" aria-hidden="true"><span class="loader__track"></span><span class="loader__fill"></span><span class="loader__barrier"></span></span>
+              <noscript><img class="prop__fallback" src="assets/img/hero-frame-32.png" width="1200" height="675" loading="lazy" alt="With Aerotherm, the moment of impact: the middle cell is red-hot and infrared rays strike the boards on both sides, while the neighboring cells stay blue."></noscript>
+            </div>
+            <p>The failing cell is isolated; neighboring cells stay cool.</p>
+          </article>
+        </div>
+        <div class="compare__controls" role="group" aria-label="Animation controls">
+          <button class="btn btn--outline" type="button" data-toggle>
+            <svg class="i-pause" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" focusable="false"><rect x="1.5" y="1" width="3" height="10" rx="1"/><rect x="7.5" y="1" width="3" height="10" rx="1"/></svg>
+            <svg class="i-play" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" focusable="false"><path d="M2.5 1.2v9.6a.6.6 0 0 0 .9.5l8-4.8a.6.6 0 0 0 0-1l-8-4.8a.6.6 0 0 0-.9.5z"/></svg>
+            <span data-toggle-label>Pause</span><span class="visually-hidden"> both animations</span>
+          </button>
+          <input class="scrubber" type="range" min="1" max="64" step="0.25" value="1" aria-label="Position in the event, both animations" data-scrub>
+          <p class="compare__stage" data-stage aria-hidden="true"></p>
+        </div>
+        <p class="compare__still note">Reduced motion is on, so these are still frames: the end state without Aerotherm, and the moment of impact with it.</p>
+        <p class="compare__note note">Illustrative sequence. Heat, rays and shimmer show the mechanism; no measured test result is shown. Board thickness is exaggerated for legibility.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Product ============ -->
+  <section class="section" id="product" aria-labelledby="product-title">
+    <div class="container product__grid">
+      <div class="product__intro">
+        <p class="eyebrow">Product</p>
+        <h2 id="product-title">A thin layer. A&nbsp;critical boundary.</h2>
+        <p class="kicker">Aerotherm</p>
+        <p class="lead">A nano-silica board made with aerogel, placed between neighboring battery cells.</p>
+        <p>When one cell goes into thermal runaway, the board suppresses or stops thermal propagation to the cells beside it. It keeps the convection suppression of aerogel insulation and adds strong suppression of thermal radiation.</p>
+        <figure class="product__figure" data-prop-still="8">
+          <div class="prop" data-variant="with">
+            <canvas class="prop__canvas" width="880" height="675" role="img" aria-label="Illustration: five battery cells standing side by side, all cool, with a pale blue Aerotherm board between each pair of cells."></canvas>
+            <span class="loader" aria-hidden="true"><span class="loader__track"></span><span class="loader__fill"></span><span class="loader__barrier"></span></span>
+            <noscript><img class="prop__fallback" src="assets/img/hero-frame-32.png" width="1200" height="675" loading="lazy" alt="Five battery cells with a pale blue Aerotherm board between each pair; the middle cell is hot and the boards beside it hold the heat."></noscript>
+          </div>
+          <figcaption class="note">Boards between the cells of a module. Illustration; board thickness is exaggerated for legibility.</figcaption>
+        </figure>
+      </div>
+
+      <div class="spec">
+        <h3 id="spec-title">Product specification</h3>
+        <p>Measured values to be supplied by Aerotherm.</p>
+        <table role="table" aria-labelledby="spec-title">
+          <thead role="rowgroup" class="visually-hidden">
+            <tr role="row"><th role="columnheader" scope="col">Property</th><th role="columnheader" scope="col">Value</th></tr>
+          </thead>
+          <tbody role="rowgroup">
+            <tr role="row"><th role="rowheader" scope="row">Material grade</th><td role="cell"><span class="ph">{{material_grade}}</span></td></tr>
+            <tr role="row"><th role="rowheader" scope="row">Thickness</th><td role="cell"><span class="ph">{{thickness}}</span></td></tr>
+            <tr role="row"><th role="rowheader" scope="row">Dimensions</th><td role="cell"><span class="ph">{{dimensions}}</span></td></tr>
+            <tr role="row"><th role="rowheader" scope="row">Density</th><td role="cell"><span class="ph">{{density}}</span></td></tr>
+            <tr role="row"><th role="rowheader" scope="row">Thermal conductivity</th><td role="cell"><span class="ph">{{thermal_conductivity}}</span></td></tr>
+            <tr role="row" class="is-edge"><th role="rowheader" scope="row">Radiation-blocking performance</th><td role="cell"><span class="ph">{{radiation_blocking}}</span></td></tr>
+            <tr role="row"><th role="rowheader" scope="row">Temperature range</th><td role="cell"><span class="ph">{{temperature_range}}</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Applications ============ -->
+  <section class="section section--tint applications" id="applications" aria-labelledby="applications-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Applications</p>
+        <h2 id="applications-title">Protection where energy is stored.</h2>
+        <p class="lead">For the rechargeable battery systems in electric vehicles and energy storage.</p>
+      </div>
+      <div class="card-grid card-grid--2">
+        <article class="card app-card">
+          <div class="app-card__img">
+            <img src="assets/img/application-ev-1280.webp" srcset="assets/img/application-ev-640.webp 640w, assets/img/application-ev-1280.webp 1280w" sizes="(min-width: 820px) min(576px, 44vw), calc(100vw - 82px)" width="1280" height="720" loading="lazy" decoding="async" alt="Conceptual illustration of an open EV battery pack: rows of cells in a metal tray, with pale blue boards between the cells.">
+          </div>
+          <div class="app-card__body">
+            <svg class="icon" viewBox="0 0 192 192" aria-hidden="true" focusable="false">
+              <path class="ln" d="M51 120H36V95l23-8 18-22h42l19 22 20 8v25h-13M77 120h42"/>
+              <circle class="ln" cx="64" cy="120" r="12.5"/>
+              <circle class="ln" cx="132" cy="120" r="12.5"/>
+              <rect class="ln-blue" x="73" y="90" width="47" height="17" rx="4"/>
+              <path class="ln-blue ic-slide" d="M92 98.5h9"/>
+            </svg>
+            <div>
+              <h3>EV battery pack</h3>
+              <p>Boards between the cells of an EV battery, to suppress or stop thermal propagation from a failing cell to its neighbors.</p>
+            </div>
+          </div>
+        </article>
+        <article class="card app-card">
+          <div class="app-card__img">
+            <img src="assets/img/application-ess-1280.webp" srcset="assets/img/application-ess-640.webp 640w, assets/img/application-ess-1280.webp 1280w" sizes="(min-width: 820px) min(576px, 44vw), calc(100vw - 82px)" width="1280" height="655" loading="lazy" decoding="async" alt="Conceptual illustration of an ESS container, cut away to show racks of battery modules inside.">
+          </div>
+          <div class="app-card__body">
+            <svg class="icon" viewBox="0 0 192 192" aria-hidden="true" focusable="false">
+              <path class="ln" d="M40 65h92v80H40zM40 65l22-15h92l-22 15M154 50v80l-22 15M55 81v48M73 81v48M91 81v48M109 81v48"/>
+              <circle class="dot-blue ic-blink" cx="143" cy="86" r="3.4"/>
+              <circle class="dot-blue ic-blink d1" cx="143" cy="101" r="3.4"/>
+            </svg>
+            <div>
+              <h3>ESS rack &amp; container</h3>
+              <p>Boards between the cells of an ESS, to suppress or stop thermal propagation to neighboring cells and to neighboring ESS containers.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+      <p class="note">Conceptual illustrations, not photographs of an Aerotherm product or installation.</p>
+    </div>
+  </section>
+
+  <!-- ============ R&D and quality ============ -->
+  <section class="section rd" id="rd" aria-labelledby="rd-title">
+    <div class="container">
+      <div class="rd__grid">
+        <div>
+          <p class="eyebrow">R&amp;D and quality</p>
+          <h2 id="rd-title">From material structure to thermal behavior.</h2>
+          <p class="lead">A focused materials R&amp;D direction: nano-silica, aerogel and heat transfer under battery-fault conditions, with thermal radiation at the center.</p>
+        </div>
+        <figure class="rd__figure">
+          <img src="assets/img/lab-concept-1280.webp" srcset="assets/img/lab-concept-640.webp 640w, assets/img/lab-concept-1280.webp 1280w" sizes="(min-width: 900px) min(608px, 46vw), calc(100vw - 48px)" width="1280" height="655" loading="lazy" decoding="async" alt="Conceptual illustration of a laboratory bench: a microscope, a heated test chamber holding a pale blue board, and a monitor.">
+          <figcaption class="note">Conceptual illustration, not an existing Aerotherm facility or test.</figcaption>
+        </figure>
+      </div>
+
+      <ul class="rd-items">
+        <li class="rd-item">
+          <svg class="icon" viewBox="0 0 192 192" aria-hidden="true" focusable="false">
+            <path class="ln" d="M68 42h56M77 42v48l-32 54q-5 11 7 11h88q12 0 7-11l-32-54V42M61 124h70"/>
+            <circle class="ln-blue ic-bob d3" cx="96" cy="105" r="4"/>
+            <circle class="dot-blue ic-bob" cx="80" cy="140" r="3.4"/>
+            <circle class="dot-blue ic-bob d1" cx="96" cy="143" r="3.4"/>
+            <circle class="dot-blue ic-bob d2" cx="112" cy="140" r="3.4"/>
+          </svg>
+          <div>
+            <h3>Materials research</h3>
+            <p>Nano-silica and aerogel</p>
+          </div>
+        </li>
+        <li class="rd-item">
+          <svg class="icon" viewBox="0 0 192 192" aria-hidden="true" focusable="false">
+            <path class="ln ic-sway" d="M42 67q8-6 16 0t16 0 16 0 12-2"/>
+            <path class="ln ic-sway d1" d="M42 97q8-6 16 0t16 0 16 0 12-2"/>
+            <path class="ln ic-sway d2" d="M42 127q8-6 16 0t16 0 16 0 12-2"/>
+            <path class="ln-blue ic-turn" d="M104 70L93 58m9 0h-9v9"/>
+            <path class="ln-blue ic-turn d1" d="M104 100L93 88m9 0h-9v9"/>
+            <path class="ln-blue ic-turn d2" d="M104 130l-11-12m9 0h-9v9"/>
+            <path class="ln" d="M114 41v110"/>
+            <path class="ln-blue" d="M125 41v110"/>
+          </svg>
+          <div>
+            <h3>Thermal evaluation</h3>
+            <p><span class="ph">{{thermal_test_methods}}</span></p>
+          </div>
+        </li>
+        <li class="rd-item">
+          <svg class="icon" viewBox="0 0 192 192" aria-hidden="true" focusable="false">
+            <rect class="ln" x="40" y="52" width="39" height="94" rx="5"/>
+            <rect class="ln" x="116" y="52" width="39" height="94" rx="5"/>
+            <path class="ln" d="M51 43h17M127 43h17"/>
+            <path class="ln-blue" d="M94 41v111M102 41v111"/>
+            <circle class="dot-warm ic-pulse" cx="86.5" cy="97" r="3.4"/>
+          </svg>
+          <div>
+            <h3>Patents</h3>
+            <p><span class="ph">{{patents}}</span></p>
+          </div>
+        </li>
+        <li class="rd-item">
+          <svg class="icon" viewBox="0 0 192 192" aria-hidden="true" focusable="false">
+            <circle class="ln" cx="65" cy="66" r="23.5"/>
+            <circle class="ln" cx="127" cy="66" r="23.5"/>
+            <circle class="ln" cx="65" cy="127" r="23.5"/>
+            <circle class="ln" cx="127" cy="127" r="23.5"/>
+            <circle class="dot-blue ic-mol" r="4.4" style="--ax:65px;--ay:80px;--bx:52px;--by:59px;--cx:78px;--cy:57px"/>
+            <circle class="dot-blue ic-mol" r="4.4" style="--ax:140px;--ay:120px;--bx:119px;--by:139px;--cx:116px;--cy:118px;animation-delay:-1.1s"/>
+          </svg>
+          <div>
+            <h3>Certifications</h3>
+            <p><span class="ph">{{certifications}}</span></p>
+          </div>
+        </li>
+      </ul>
+      <p class="note">Test methods, patents and certifications are placeholders until Aerotherm supplies the details.</p>
+    </div>
+  </section>
+
+  <!-- ============ News ============ -->
+  <section class="section section--tint" id="news" aria-labelledby="news-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">News and milestones</p>
+        <h2 id="news-title">The work ahead.</h2>
+      </div>
+      <div class="news-grid">
+        <article class="card news-card">
+          <p class="news-card__cat">Company</p>
+          <h3>Founded in <time datetime="2026-10">October 2026</time></h3>
+          <p>Aerotherm is founded in Pyeongtaek, Republic of Korea, to research and develop nano-silica boards made with aerogel.</p>
+          <div class="news-card__meta"><span>Company milestone</span></div>
+        </article>
+        <article class="card news-card">
+          <p class="news-card__cat">Research</p>
+          <h3><span class="ph">{{news_2_title}}</span></h3>
+          <p><span class="ph">{{news_2_summary}}</span></p>
+          <div class="news-card__meta"><span>Content placeholder · <span class="ph">{{news_2_date}}</span></span></div>
+        </article>
+        <article class="card news-card">
+          <p class="news-card__cat">Announcements</p>
+          <h3><span class="ph">{{news_3_title}}</span></h3>
+          <p><span class="ph">{{news_3_summary}}</span></p>
+          <div class="news-card__meta"><span>Content placeholder · <span class="ph">{{news_3_date}}</span></span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Contact ============ -->
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="container contact__grid">
+      <div class="contact__intro">
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-title">Let's talk about your application.</h2>
+        <p class="lead">Talk to Aerotherm about materials, samples and collaboration for EV or ESS batteries.</p>
+        <div class="contact__place">
+          <svg class="icon icon--l" viewBox="0 0 192 192" aria-hidden="true" focusable="false">
+            <rect class="ln" x="40" y="52" width="39" height="94" rx="5"/>
+            <rect class="ln" x="116" y="52" width="39" height="94" rx="5"/>
+            <path class="ln" d="M51 43h17M127 43h17"/>
+            <path class="ln-blue" d="M94 41v111M102 41v111"/>
+            <circle class="dot-warm ic-pulse" cx="86.5" cy="97" r="3.4"/>
+          </svg>
+          <p><strong>Pyeongtaek</strong><span>Republic of Korea</span></p>
+        </div>
+        <dl class="contact__details">
+          <dt>Address</dt><dd><span class="ph">{{street_address}}</span></dd>
+          <dt>Phone</dt><dd><span class="ph">{{contact_phone}}</span></dd>
+          <dt>Email</dt><dd><span class="ph">{{contact_email}}</span></dd>
+        </dl>
+      </div>
+
+      <div class="contact__form">
+        <form class="form" id="contact-form" action="#contact" method="post">
+          <div class="form__row">
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="error-name">
+              <span class="field__error" id="error-name" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="f-company">Company <span class="optional">(optional)</span></label>
+              <input id="f-company" name="company" type="text" autocomplete="organization">
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="error-email">
+            <span class="field__error" id="error-email" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="f-inquiry">Inquiry type</label>
+            <select id="f-inquiry" name="inquiry" required aria-describedby="error-inquiry">
+              <option value="">Select inquiry type</option>
+              <option value="sample">Sample request</option>
+              <option value="technical">Technical question</option>
+              <option value="collaboration">Collaboration</option>
+              <option value="other">Other</option>
+            </select>
+            <span class="field__error" id="error-inquiry" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="f-message">Message</label>
+            <textarea id="f-message" name="message" rows="5" required placeholder="Tell us about your application…" aria-describedby="error-message"></textarea>
+            <span class="field__error" id="error-message" aria-live="polite"></span>
+          </div>
+          <div class="form__submit">
+            <button class="btn btn--primary" type="submit" disabled>Send inquiry</button>
+            <p class="form__note">This form checks your entries in your browser only. It is not connected to a server yet, so nothing is sent.</p>
+          </div>
+          <noscript><p class="form__note">The form needs JavaScript to check your entries. Without it, please use <span class="ph">{{contact_email}}</span>.</p></noscript>
+          <div class="form__status" id="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <a class="wordmark" href="#top" aria-label="Aerotherm, back to top">AEROTHERM</a>
+        <address>Pyeongtaek, Republic of Korea</address>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#technology">Technology</a></li>
+          <li><a href="#product">Product</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="site-footer__legal">
+        <p>© 2026 Aerotherm</p>
+        <p>Set in Manrope and Inter under the SIL Open Font License (<a href="assets/fonts/Manrope-OFL.txt">Manrope</a>, <a href="assets/fonts/Inter-OFL.txt">Inter</a>).</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script defer src="assets/js/propagation.js"></script>
+<script defer src="assets/js/main.js"></script>
+</body>
+</html>
