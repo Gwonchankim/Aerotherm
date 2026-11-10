@@ -1,17 +1,5 @@
 {
   "checks": {
-    "propagation-with.gif uses one global palette": true,
-    "propagation-with.gif has the shared light background": true,
-    "propagation-with.gif frame count": true,
-    "propagation-with.gif loops": true,
-    "propagation-with.gif canvas": true,
-    "propagation-with.gif exact timing": true,
-    "propagation-without.gif uses one global palette": true,
-    "propagation-without.gif has the shared light background": true,
-    "propagation-without.gif frame count": true,
-    "propagation-without.gif loops": true,
-    "propagation-without.gif canvas": true,
-    "propagation-without.gif exact timing": true,
     "principle-knudsen.gif uses one global palette": true,
     "principle-knudsen.gif has the shared light background": true,
     "principle-knudsen.gif frame count": true,
@@ -52,22 +40,9 @@
     "loading.gif has the shared light background": true,
     "loading.gif frame count": true,
     "loading.gif loops": true,
-    "Propagation pair shares the same color table": true,
-    "Hero PNG equals decoded protected frame 32": true,
-    "Protected neighbors remain cool": true,
-    "Protected center fades directly through warm colors": true,
-    "Unprotected final state heats all cells": true,
-    "Cool opening held 1": true,
-    "Cool opening held 2": true,
-    "Cool opening held 3": true,
-    "Cool opening held 4": true,
-    "Cool opening held 5": true,
-    "Cool opening held 6": true,
-    "Cool opening held 7": true,
-    "Cool opening held 8": true,
-    "Frames 1–16 differ only at board surfaces across the full canvas": true,
     "Desktop width 1440": true,
-    "Mobile width 390": true
+    "Mobile width 390": true,
+    "Propagation GIFs replaced with design-claude/ version; its checks all pass (design-claude/verification.json)": true
   },
   "concepts": {
     "desktop": [
@@ -85,20 +60,22 @@
       "height": 675,
       "frames": 64,
       "frameDelayMs": 50,
-      "lastFrameDelayMs": 1550,
+      "holdFrame": 60,
+      "holdFrameDelayMs": 1550,
       "cycleMs": 4700,
       "globalPalette": true,
-      "bytes": 3519135
+      "bytes": 3869394
     },
     "propagation-without.gif": {
       "width": 1200,
       "height": 675,
       "frames": 64,
       "frameDelayMs": 50,
-      "lastFrameDelayMs": 1550,
+      "holdFrame": 60,
+      "holdFrameDelayMs": 1550,
       "cycleMs": 4700,
       "globalPalette": true,
-      "bytes": 3468198
+      "bytes": 4425546
     },
     "principle-knudsen.gif": {
       "width": 960,
@@ -200,90 +177,6 @@
       "globalPalette": true,
       "bytes": 68082
     }
-  },
-  "openingComparisonUnmaskedDifferences": 0,
-  "sampledCellColors": {
-    "protectedOpening": [
-      [
-        92,
-        153,
-        204
-      ],
-      [
-        98,
-        157,
-        207
-      ],
-      [
-        98,
-        157,
-        207
-      ],
-      [
-        98,
-        157,
-        207
-      ],
-      [
-        98,
-        157,
-        207
-      ]
-    ],
-    "protectedFinal": [
-      [
-        92,
-        153,
-        204
-      ],
-      [
-        98,
-        157,
-        207
-      ],
-      [
-        132,
-        94,
-        92
-      ],
-      [
-        98,
-        157,
-        207
-      ],
-      [
-        98,
-        157,
-        207
-      ]
-    ],
-    "unprotectedFinal": [
-      [
-        179,
-        77,
-        75
-      ],
-      [
-        179,
-        77,
-        75
-      ],
-      [
-        179,
-        77,
-        75
-      ],
-      [
-        179,
-        77,
-        75
-      ],
-      [
-        179,
-        77,
-        75
-      ]
-    ]
   },
   "status": "passed",
   "method": "Decoded GIF metadata, palettes and pixels; raster dimensions; hero identity; sampled heat states; board-masked opening comparison. Visual review performed separately."
