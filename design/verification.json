@@ -1,0 +1,290 @@
+{
+  "checks": {
+    "propagation-with.gif uses one global palette": true,
+    "propagation-with.gif has the shared light background": true,
+    "propagation-with.gif frame count": true,
+    "propagation-with.gif loops": true,
+    "propagation-with.gif canvas": true,
+    "propagation-with.gif exact timing": true,
+    "propagation-without.gif uses one global palette": true,
+    "propagation-without.gif has the shared light background": true,
+    "propagation-without.gif frame count": true,
+    "propagation-without.gif loops": true,
+    "propagation-without.gif canvas": true,
+    "propagation-without.gif exact timing": true,
+    "principle-knudsen.gif uses one global palette": true,
+    "principle-knudsen.gif has the shared light background": true,
+    "principle-knudsen.gif frame count": true,
+    "principle-knudsen.gif loops": true,
+    "principle-solid.gif uses one global palette": true,
+    "principle-solid.gif has the shared light background": true,
+    "principle-solid.gif frame count": true,
+    "principle-solid.gif loops": true,
+    "principle-radiation.gif uses one global palette": true,
+    "principle-radiation.gif has the shared light background": true,
+    "principle-radiation.gif frame count": true,
+    "principle-radiation.gif loops": true,
+    "icons/rnd.gif uses one global palette": true,
+    "icons/rnd.gif has the shared light background": true,
+    "icons/rnd.gif frame count": true,
+    "icons/rnd.gif loops": true,
+    "icons/nanopore.gif uses one global palette": true,
+    "icons/nanopore.gif has the shared light background": true,
+    "icons/nanopore.gif frame count": true,
+    "icons/nanopore.gif loops": true,
+    "icons/radiation.gif uses one global palette": true,
+    "icons/radiation.gif has the shared light background": true,
+    "icons/radiation.gif frame count": true,
+    "icons/radiation.gif loops": true,
+    "icons/barrier.gif uses one global palette": true,
+    "icons/barrier.gif has the shared light background": true,
+    "icons/barrier.gif frame count": true,
+    "icons/barrier.gif loops": true,
+    "icons/ev.gif uses one global palette": true,
+    "icons/ev.gif has the shared light background": true,
+    "icons/ev.gif frame count": true,
+    "icons/ev.gif loops": true,
+    "icons/ess.gif uses one global palette": true,
+    "icons/ess.gif has the shared light background": true,
+    "icons/ess.gif frame count": true,
+    "icons/ess.gif loops": true,
+    "loading.gif uses one global palette": true,
+    "loading.gif has the shared light background": true,
+    "loading.gif frame count": true,
+    "loading.gif loops": true,
+    "Propagation pair shares the same color table": true,
+    "Hero PNG equals decoded protected frame 32": true,
+    "Protected neighbors remain cool": true,
+    "Protected center fades directly through warm colors": true,
+    "Unprotected final state heats all cells": true,
+    "Cool opening held 1": true,
+    "Cool opening held 2": true,
+    "Cool opening held 3": true,
+    "Cool opening held 4": true,
+    "Cool opening held 5": true,
+    "Cool opening held 6": true,
+    "Cool opening held 7": true,
+    "Cool opening held 8": true,
+    "Frames 1–16 differ only at board surfaces across the full canvas": true,
+    "Desktop width 1440": true,
+    "Mobile width 390": true
+  },
+  "concepts": {
+    "desktop": [
+      1440,
+      6820
+    ],
+    "mobile": [
+      390,
+      9852
+    ]
+  },
+  "animations": {
+    "propagation-with.gif": {
+      "width": 1200,
+      "height": 675,
+      "frames": 64,
+      "frameDelayMs": 50,
+      "lastFrameDelayMs": 1550,
+      "cycleMs": 4700,
+      "globalPalette": true,
+      "bytes": 3519135
+    },
+    "propagation-without.gif": {
+      "width": 1200,
+      "height": 675,
+      "frames": 64,
+      "frameDelayMs": 50,
+      "lastFrameDelayMs": 1550,
+      "cycleMs": 4700,
+      "globalPalette": true,
+      "bytes": 3468198
+    },
+    "principle-knudsen.gif": {
+      "width": 960,
+      "height": 540,
+      "frames": 48,
+      "frameDelayMs": 50,
+      "lastFrameDelayMs": 50,
+      "cycleMs": 2400,
+      "globalPalette": true,
+      "bytes": 717246
+    },
+    "principle-solid.gif": {
+      "width": 960,
+      "height": 540,
+      "frames": 48,
+      "frameDelayMs": 50,
+      "lastFrameDelayMs": 50,
+      "cycleMs": 2400,
+      "globalPalette": true,
+      "bytes": 736320
+    },
+    "principle-radiation.gif": {
+      "width": 1200,
+      "height": 540,
+      "frames": 48,
+      "frameDelayMs": 50,
+      "lastFrameDelayMs": 50,
+      "cycleMs": 2400,
+      "globalPalette": true,
+      "bytes": 1496837
+    },
+    "icons/rnd.gif": {
+      "width": 192,
+      "height": 192,
+      "frames": 40,
+      "frameDelayMs": 60,
+      "lastFrameDelayMs": 60,
+      "cycleMs": 2400,
+      "globalPalette": true,
+      "bytes": 56877
+    },
+    "icons/nanopore.gif": {
+      "width": 192,
+      "height": 192,
+      "frames": 40,
+      "frameDelayMs": 60,
+      "lastFrameDelayMs": 60,
+      "cycleMs": 2400,
+      "globalPalette": true,
+      "bytes": 82679
+    },
+    "icons/radiation.gif": {
+      "width": 192,
+      "height": 192,
+      "frames": 40,
+      "frameDelayMs": 60,
+      "lastFrameDelayMs": 60,
+      "cycleMs": 2400,
+      "globalPalette": true,
+      "bytes": 55101
+    },
+    "icons/barrier.gif": {
+      "width": 192,
+      "height": 192,
+      "frames": 40,
+      "frameDelayMs": 60,
+      "lastFrameDelayMs": 60,
+      "cycleMs": 2400,
+      "globalPalette": true,
+      "bytes": 67004
+    },
+    "icons/ev.gif": {
+      "width": 192,
+      "height": 192,
+      "frames": 40,
+      "frameDelayMs": 60,
+      "lastFrameDelayMs": 60,
+      "cycleMs": 2400,
+      "globalPalette": true,
+      "bytes": 60749
+    },
+    "icons/ess.gif": {
+      "width": 192,
+      "height": 192,
+      "frames": 40,
+      "frameDelayMs": 60,
+      "lastFrameDelayMs": 60,
+      "cycleMs": 2400,
+      "globalPalette": true,
+      "bytes": 62985
+    },
+    "loading.gif": {
+      "width": 480,
+      "height": 160,
+      "frames": 48,
+      "frameDelayMs": 50,
+      "lastFrameDelayMs": 50,
+      "cycleMs": 2400,
+      "globalPalette": true,
+      "bytes": 68082
+    }
+  },
+  "openingComparisonUnmaskedDifferences": 0,
+  "sampledCellColors": {
+    "protectedOpening": [
+      [
+        92,
+        153,
+        204
+      ],
+      [
+        98,
+        157,
+        207
+      ],
+      [
+        98,
+        157,
+        207
+      ],
+      [
+        98,
+        157,
+        207
+      ],
+      [
+        98,
+        157,
+        207
+      ]
+    ],
+    "protectedFinal": [
+      [
+        92,
+        153,
+        204
+      ],
+      [
+        98,
+        157,
+        207
+      ],
+      [
+        132,
+        94,
+        92
+      ],
+      [
+        98,
+        157,
+        207
+      ],
+      [
+        98,
+        157,
+        207
+      ]
+    ],
+    "unprotectedFinal": [
+      [
+        179,
+        77,
+        75
+      ],
+      [
+        179,
+        77,
+        75
+      ],
+      [
+        179,
+        77,
+        75
+      ],
+      [
+        179,
+        77,
+        75
+      ],
+      [
+        179,
+        77,
+        75
+      ]
+    ]
+  },
+  "status": "passed",
+  "method": "Decoded GIF metadata, palettes and pixels; raster dimensions; hero identity; sampled heat states; board-masked opening comparison. Visual review performed separately."
+}
