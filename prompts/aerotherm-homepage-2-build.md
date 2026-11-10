@@ -37,7 +37,7 @@ Do not invent figures, history, people, test results, patents, certifications, p
 
 **Build rules**
 - All text is real HTML, not baked into images. The nav scrolls to each section, and collapses into a menu on mobile.
-- Recreate the animations in code (CSS keyframes and inline SVG) instead of dropping the GIFs onto the page: the two propagation animations, the three principle animations, the icons and the loading state. Keep the propagation animations' 16 key frames and timing. Build the bar chart in HTML or SVG.
+- Recreate the animations in code (CSS keyframes and inline SVG) instead of dropping the GIFs onto the page: the two propagation animations, the three principle animations, the icons and the loading state. Keep the propagation animations' stages and timing (3.2 s of motion, then a 1.5 s hold), and let the browser interpolate between stages so the motion is smooth. Build the bar chart in HTML or SVG.
 - Make the with/without comparison interactive: a toggle or slider that switches between the two propagation animations, frame for frame. Without Aerotherm, heat cascades through every cell; with it, heat stops at the boards beside the failing cell.
 - Convert any GIF you still need to a looping MP4 (muted, autoplay, playsinline, with a poster frame) or an animated WebP.
 - Keep the page light throughout, as in the design, with text and heat colors that meet WCAG AA contrast on the light background.
