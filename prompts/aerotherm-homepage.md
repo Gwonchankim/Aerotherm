@@ -1,27 +1,28 @@
 Design and build the launch of the new company homepage for **Aerotherm**, a materials R&D company that develops aerogel-based nano-silica boards with outstanding thermal insulation.
 
 **Company and product facts (use only these)**
+- Aerotherm was founded in October 2026 in Pyeongtaek, Republic of Korea.
 - Aerotherm researches and develops nano-silica boards made with aerogel.
 - Its flagship product, also called Aerotherm, goes between the cells of the secondary (rechargeable) batteries used in EVs and ESS.
 - Its job: when one cell goes into thermal runaway because of a battery fault, the board suppresses or stops thermal propagation to the neighboring cells and to neighboring ESS containers.
 - What sets it apart: typical aerogel insulation mainly suppresses heat transfer by convection. Aerotherm keeps that and is also highly effective at suppressing heat transfer by thermal radiation.
 - Why that matters (general physics, not a product claim): radiative heat transfer rises with the fourth power of absolute temperature, so at thermal-runaway temperatures radiation becomes a major path for heat between cells.
 
-Do not invent figures, history, people, test results, patents, certifications, partners or customers, and do not explain how Aerotherm blocks radiation (materials, additives or structure). Wherever the page needs one, put a clearly marked placeholder such as `{{founded_year}}`, `{{thermal_conductivity}}`, `{{address}}` or `{{contact_email}}`, and list every placeholder when you deliver.
+Do not invent figures, history, people, test results, patents, certifications, partners or customers, and do not explain how Aerotherm blocks radiation (materials, additives or structure). It is a newly founded company, so do not imply a long track record, mass production or existing customers. Wherever the page needs a fact, put a clearly marked placeholder such as `{{thermal_conductivity}}`, `{{street_address}}` or `{{contact_email}}`, and list every placeholder when you deliver.
 
 **Positioning:** a deep-tech materials company whose work keeps one failing battery cell from becoming a fire. Its edge is radiation: it blocks the heat that travels as radiation, not only the heat carried by convection that ordinary aerogel stops. Make that the thread through the hero, About and Technology. Keep the tone calm, precise and trustworthy, for engineers and buyers at battery, EV and ESS makers. Show heat being stopped, not fire and explosions. Write the copy in English, with a KO / EN switch in the header (it can link to `#` for now).
 
 **Site structure (one page with anchor navigation)**
 1. Header: AEROTHERM wordmark; nav for About, Technology, Product, Applications, R&D, News, Contact; a "Contact us" button.
 2. Hero: the company mission in one line, the hero animation, and two calls to action (Explore our technology / Request a sample).
-3. About: who Aerotherm is and why thermal propagation matters.
+3. About: who Aerotherm is (founded October 2026 in Pyeongtaek, Korea) and why thermal propagation matters.
 4. Technology: the three ways heat travels (conduction, convection, radiation) in an animated diagram. Typical aerogel mainly suppresses convection; Aerotherm also suppresses radiation. Add a macro view of the nano-silica structure and an interactive with/without Aerotherm comparison.
 5. Product: the Aerotherm board, where it sits between cells, and a spec table made of placeholders, including radiation-blocking performance.
 6. Applications: EV battery packs (cell to cell) and ESS (cell to cell, rack and container).
 7. R&D and quality: lab and test capabilities, patents and certifications, all as placeholders.
-8. News and milestones: three placeholder cards.
+8. News and milestones: three cards. The first is the company's founding in October 2026; the other two are placeholders.
 9. Contact: an inquiry form (name, company, email, inquiry type: sample, technical, partnership; message) that validates on the client and is not wired to a backend.
-10. Footer: company info placeholders, links and copyright.
+10. Footer: company info (Pyeongtaek, Republic of Korea, with street address, phone and email as placeholders), links and © 2026 Aerotherm.
 
 **Step 1: Design with GPT Image 2.6**
 1. A full-page concept image of the homepage (desktop, 1440 px wide) showing every section above.
