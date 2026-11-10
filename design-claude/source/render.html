@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Aerotherm propagation renderer</title>
+<style>html,body{margin:0;background:#F6F9FB}canvas{display:block;width:1200px;height:675px}</style>
+</head>
+<body>
+<canvas id="c" width="2400" height="1350"></canvas>
+<script>
+'use strict';
+// Renders one frame of either propagation GIF. Call draw('with'|'without', frame 1..64).
+// Drawn at 2x and downscaled when the GIF is assembled.
+
+const CW = 1200, CH = 675, SS = 2;
+
+// Geometry in construction units (from design/style-notes.md), board exaggerated to 1/5 of a cell.
+const T = 70, D = 250, H = 320, TB = 14, N = 5;
+const STEP = T + TB, STACK = N * T + (N - 1) * TB, XC = STACK / 2;
+
+// Oblique projection: narrow ends face the viewer, depth recedes up and to the right.
+const K = 0.5, ANG = Math.PI / 6, DX = K * Math.cos(ANG), DY = K * Math.sin(ANG);
+const S = 1.40;
+const OX = (CW - S * (STACK + D * DX)) / 2, OY = 626;
+const P = (x, y, z) => [OX + S * (x + z * DX), OY - S * (y + z * DY)];
+
+const BG = '#F6F9FB', BLUE_RGB = [67, 140, 203], AERO_EDGE = '#83B9CD';
+const cells = [...Array(N)].map((_, i) => ({ x0: i * STEP, x1: i * STEP + T }));
+const boards = [...Array(N - 1)].map((_, j) => ({ x0: j * STEP + T, x1: (j + 1) * STEP }));
+const ROWS = [0.2, 0.32, 0.44, 0.56, 0.68, 0.80].map(u => u * H);
+
+// ---------- color: heat ramp interpolated in OKLCH ----------
+const hexRgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const s2l = c => (c /= 255) <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+const l2s = c => { c = Math.min(1, Math.max(0, c)); return Math.round(255 * (c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055)); };
+function toLch(hex) {
+  const [r, g, b] = hexRgb(hex).map(s2l);
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  const L = 0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s;
+  const a = 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s;
+  const bb = 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s;
+  return [L, Math.hypot(a, bb), (Math.atan2(bb, a) * 180 / Math.PI + 360) % 360];
+}
+function lchRgb([L, C, h]) {
+  const a = C * Math.cos(h * Math.PI / 180), b = C * Math.sin(h * Math.PI / 180);
+  const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3;
+  const m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3;
+  const s = (L - 0.0894841775 * a - 1.2914855480 * b) ** 3;
+  return [l2s(4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s),
+          l2s(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s),
+          l2s(-0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s)];
+}
+// Heat ramp in OKLab: blue -> a bright, near-white glow -> amber -> orange -> red, then red -> ember.
+// Passing through a light point keeps the blue-to-amber change from going muddy gray or rainbow.
+const toLab = hex => { const [L, C, h] = toLch(hex); return [L, C * Math.cos(h * Math.PI / 180), C * Math.sin(h * Math.PI / 180)]; };
+const labRgb = ([L, a, b]) => lchRgb([L, Math.hypot(a, b), Math.atan2(b, a) * 180 / Math.PI]);
+const LAB = { blue: toLab('#438CCB'), glow: [0.93, 0.004, 0.02], amber: toLab('#F3B044'), orange: toLab('#EE742C'), red: toLab('#B82C25'), ember: toLab('#71352E') };
+const HEAT_STOPS = [[0, LAB.blue], [0.16, LAB.glow], [0.36, LAB.amber], [0.68, LAB.orange], [1, LAB.red]];
+const lerp3 = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+function heatRgb(h, e = 0) {
+  h = Math.min(1, Math.max(0, h));
+  let c = HEAT_STOPS[HEAT_STOPS.length - 1][1];
+  for (let i = 1; i < HEAT_STOPS.length; i++) {
+    const [t0, c0] = HEAT_STOPS[i - 1], [t1, c1] = HEAT_STOPS[i];
+    if (h <= t1) { c = lerp3(c0, c1, (h - t0) / (t1 - t0)); break; }
+  }
+  if (e > 0) c = lerp3(c, LAB.ember, e);
+  return labRgb(c);
+}
+const rgba = (c, a = 1) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+const mixRgb = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
+const shade = (c, k) => c.map(v => Math.round(v * k));
+
+// ---------- timing ----------
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const sstep = t => { t = clamp(t); return t * t * (3 - 2 * t); };
+const ramp = (f, a, b) => sstep((f - a) / (b - a));
+
+function state(v, f) {
+  const w = v === 'with';
+  return {
+    v, f,
+    h3: ramp(f, 12, 20),                                  // cell 3 heats, frames 13–20
+    ember: w ? ramp(f, 46, 59) : 0,                       // cell 3 dims to ember, 47–60
+    vent: ramp(f, 20, 24) * (w ? 1 - ramp(f, 47, 56) : 1),
+    impact: w ? ramp(f, 27, 31) : 0,                      // impact band spreads along the board
+    board: w ? ramp(f, 27, 31) * (1 - 0.8 * ramp(f, 46, 58)) : 0,   // hot face glow
+    pulse: w ? (f < 27 || f > 38 ? 0 : f <= 32 ? sstep((f - 27) / 5) : 1 - sstep((f - 32) / 6)) : 0,
+    dim: w ? ramp(f, 27, 31) * (1 - ramp(f, 38, 46)) : 0,
+    fade: { 1: 0.9, 2: 0.66, 3: 0.38, 4: 0.12, 61: 0.14, 62: 0.4, 63: 0.66, 64: 0.88 }[f] || 0,
+  };
+}
+
+// Heat front without Aerotherm: the frame at which it passes distance d from cell 3's center.
+function frontFrame(d) {
+  if (d <= 35) return -Infinity;
+  if (d <= 119) return 24 + (d - 35) / 84 * 8;         // through cells 2 and 4
+  if (d <= 133) return 32 + (d - 119) / 14 * 3;        // across the gaps
+  return 35 + (d - 133) / 70 * 11;                     // through cells 1 and 5
+}
+// Distance of the heat front from cell 3's center. With Aerotherm it stops at the boards (35).
+function frontPos(f, v = 'without') {
+  if (f < 21) return 0;
+  if (v === 'with') return Math.min(35, (f - 21) / 6 * 35);
+  if (f <= 24) return (f - 21) / 3 * 35;
+  if (f <= 32) return 35 + (f - 24) / 8 * 84;
+  if (f <= 35) return 119 + (f - 32) / 3 * 14;
+  if (f <= 46) return 133 + (f - 35) / 11 * 70;
+  return 203;
+}
+function heatAt(x, st) {
+  const d = Math.abs(x - XC);
+  if (d <= 35) return st.h3 * (1 - 0.07 * (d / 35) ** 2);
+  if (st.v === 'with') return 0;
+  return sstep((st.f - frontFrame(d)) / 12);
+}
+const emberAt = (x, st) => Math.abs(x - XC) <= 35 ? st.ember : 0;
+const cellRgb = (x, st) => heatRgb(heatAt(x, st), emberAt(x, st));
+
+// ---------- drawing helpers ----------
+function poly(ctx, pts) { ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath(); }
+function rrect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); }
+const silhouette = (x0, x1, top = H) => [P(x0, 0, 0), P(x1, 0, 0), P(x1, H, 0), P(x1, top, D), P(x0, top, D), P(x0, H, 0)];
+
+function drawBase(ctx) {
+  const x0 = -14, x1 = STACK + 14, z0 = -12, z1 = D + 12, y0 = -16;
+  const a = P(x0, y0, z0), b = P(x1, y0, z0);
+  ctx.save(); ctx.filter = 'blur(16px)'; ctx.fillStyle = 'rgba(16,42,67,0.14)';
+  ctx.beginPath(); ctx.ellipse((a[0] + b[0]) / 2 + 40, a[1] + 6, (b[0] - a[0]) / 2 + 60, 20, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+  ctx.strokeStyle = '#B9CAD6'; ctx.lineWidth = 1;
+  poly(ctx, [P(x1, y0, z0), P(x1, y0, z1), P(x1, 0, z1), P(x1, 0, z0)]); ctx.fillStyle = '#CAD7E0'; ctx.fill(); ctx.stroke();
+  poly(ctx, [P(x0, 0, z0), P(x1, 0, z0), P(x1, 0, z1), P(x0, 0, z1)]); ctx.fillStyle = '#E8EFF4'; ctx.fill(); ctx.stroke();
+  poly(ctx, [P(x0, y0, z0), P(x1, y0, z0), P(x1, 0, z0), P(x0, 0, z0)]); ctx.fillStyle = '#D8E2E9'; ctx.fill(); ctx.stroke();
+}
+
+function terminal(ctx, xm, zm, copper) {
+  const wx = 30, wz = 34, h = 9, x0 = xm - wx / 2, x1 = xm + wx / 2, z0 = zm - wz / 2, z1 = zm + wz / 2, y0 = H, y1 = H + h;
+  const c = copper ? ['#D4B49E', '#B89580', '#A58472'] : ['#C9D2DA', '#A7B4BE', '#95A3AE'];
+  ctx.strokeStyle = 'rgba(16,42,67,0.4)'; ctx.lineWidth = 0.8;
+  poly(ctx, [P(x1, y0, z0), P(x1, y0, z1), P(x1, y1, z1), P(x1, y1, z0)]); ctx.fillStyle = c[2]; ctx.fill(); ctx.stroke();
+  poly(ctx, [P(x0, y1, z0), P(x1, y1, z0), P(x1, y1, z1), P(x0, y1, z1)]); ctx.fillStyle = c[0]; ctx.fill(); ctx.stroke();
+  poly(ctx, [P(x0, y0, z0), P(x1, y0, z0), P(x1, y1, z0), P(x0, y1, z0)]); ctx.fillStyle = c[1]; ctx.fill(); ctx.stroke();
+}
+
+function drawCell(ctx, c, st) {
+  // broad face on the right (only the outer one and slivers in empty gaps stay visible)
+  poly(ctx, [P(c.x1, 0, 0), P(c.x1, 0, D), P(c.x1, H, D), P(c.x1, H, 0)]);
+  ctx.fillStyle = rgba(shade(cellRgb(c.x1 - 0.01, st), 0.8)); ctx.fill();
+  const fx = P(c.x1, 0, 0)[0], bx = P(c.x1, 0, D)[0];
+  let g = ctx.createLinearGradient(fx, 0, bx, 0);
+  g.addColorStop(0, 'rgba(255,255,255,0.12)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g; ctx.fill(); ctx.strokeStyle = 'rgba(16,42,67,0.4)'; ctx.lineWidth = 1; ctx.stroke();
+
+  // lid and terminals
+  const mid = (c.x0 + c.x1) / 2, hm = heatAt(mid, st);
+  const lid = mixRgb([221, 231, 239], heatRgb(hm, emberAt(mid, st)).map(v => Math.min(255, v + 45)), 0.5 * hm);
+  poly(ctx, [P(c.x0, H, 0), P(c.x1, H, 0), P(c.x1, H, D), P(c.x0, H, D)]);
+  ctx.fillStyle = rgba(lid); ctx.fill(); ctx.strokeStyle = 'rgba(16,42,67,0.35)'; ctx.stroke();
+  terminal(ctx, mid, D * 0.73, false);
+  terminal(ctx, mid, D * 0.27, true);
+
+  // narrow end facing the viewer, colored column by column from the heat field
+  const [ax, ay] = P(c.x0, H, 0), [bx2, by] = P(c.x1, 0, 0);
+  g = ctx.createLinearGradient(ax, 0, bx2, 0);
+  for (let k = 0; k <= 28; k++) g.addColorStop(k / 28, rgba(cellRgb(c.x0 + k / 28 * T, st)));
+  rrect(ctx, ax, ay, bx2 - ax, by - ay, 3); ctx.fillStyle = g; ctx.fill();
+  g = ctx.createLinearGradient(ax, 0, bx2, 0);
+  g.addColorStop(0, 'rgba(255,255,255,0.10)'); g.addColorStop(0.3, 'rgba(255,255,255,0.26)');
+  g.addColorStop(0.55, 'rgba(255,255,255,0.04)'); g.addColorStop(1, 'rgba(16,42,67,0.10)');
+  ctx.fillStyle = g; ctx.fill();
+  g = ctx.createLinearGradient(0, ay, 0, by); g.addColorStop(0, 'rgba(255,255,255,0.10)'); g.addColorStop(1, 'rgba(16,42,67,0.08)');
+  ctx.fillStyle = g; ctx.fill();
+  ctx.strokeStyle = 'rgba(16,42,67,0.45)'; ctx.lineWidth = 1; ctx.stroke();
+  rrect(ctx, ax + 3.5, ay + 3.5, bx2 - ax - 7, by - ay - 7, 2); ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.stroke();
+}
+
+function drawBoard(ctx, b, j, st) {
+  const hotSide = j === 1 ? 1 : j === 2 ? -1 : 0;   // side facing cell 3
+  const g = hotSide ? st.board : 0;
+  // (the board's right face is always hidden behind the next cell, so it is not drawn)
+  poly(ctx, [P(b.x0, H, 0), P(b.x1, H, 0), P(b.x1, H, D), P(b.x0, H, D)]);
+  ctx.fillStyle = '#E1F2F8'; ctx.fill(); ctx.strokeStyle = AERO_EDGE; ctx.lineWidth = 1.4; ctx.stroke();
+  const [ax, ay] = P(b.x0, H, 0), [bx, by] = P(b.x1, 0, 0);
+  const gr = ctx.createLinearGradient(ax, 0, bx, 0);
+  const cool = [204, 234, 244], hot = [240, 132, 54];
+  for (const [u, w] of [[0, 1], [0.3, 0.95], [0.44, 0.2], [0.52, 0], [1, 0]]) {
+    gr.addColorStop(hotSide === 1 ? 1 - u : u, rgba(mixRgb(cool, hot, w * g)));
+  }
+  ctx.beginPath(); ctx.rect(ax, ay, bx - ax, by - ay); ctx.fillStyle = gr; ctx.fill();
+  // frosted sheen down the cool side
+  const sx = hotSide === 1 ? ax + (bx - ax) * 0.28 : ax + (bx - ax) * 0.72;
+  ctx.strokeStyle = 'rgba(255,255,255,0.7)'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(sx, ay + 6); ctx.lineTo(sx, by - 6); ctx.stroke();
+  ctx.beginPath(); ctx.rect(ax, ay, bx - ax, by - ay); ctx.strokeStyle = AERO_EDGE; ctx.lineWidth = 1.6; ctx.stroke();
+}
+
+// A bright band marks the heat front: through the neighbors without Aerotherm, up to the boards with it.
+function frontBand(ctx, st) {
+  const F = frontPos(st.f, st.v);
+  if (F <= 4 || F >= 203 || (st.v === 'with' && F >= 35)) return;
+  // 'screen' only lightens: a warm band over blue turns light, not gray as plain alpha blending would
+  ctx.save(); ctx.globalCompositeOperation = 'screen';
+  for (const s of [-1, 1]) {
+    const [px, py0] = P(XC + s * F, H, 0), py1 = P(XC + s * F, 0, 0)[1], w = 20 * S, x0 = px - s * w;
+    const g = ctx.createLinearGradient(x0, 0, px, 0);
+    g.addColorStop(0, 'rgba(255,200,120,0)'); g.addColorStop(0.75, 'rgba(255,196,110,0.32)'); g.addColorStop(1, 'rgba(255,236,190,0.6)');
+    ctx.fillStyle = g; ctx.fillRect(Math.min(x0, px), py0, w, py1 - py0);
+  }
+  ctx.restore();
+}
+
+// With Aerotherm: everything except cell 3, its two boards and the heat fades back.
+function dimVeil(ctx, st) {
+  if (st.dim <= 0) return;
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 0, CW, CH);
+  for (const pts of [silhouette(cells[2].x0, cells[2].x1, H + 12), silhouette(boards[1].x0, boards[1].x1), silhouette(boards[2].x0, boards[2].x1)]) {
+    pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath();
+  }
+  ctx.clip('evenodd');
+  ctx.fillStyle = `rgba(246,249,251,${0.45 * st.dim})`; ctx.fillRect(0, 0, CW, CH); ctx.restore();
+}
+
+// With Aerotherm: the heat front flattens against each board and spreads along its hot face.
+function impact(ctx, st) {
+  if (st.v !== 'with' || st.impact <= 0) return;
+  const I = st.board, half = 5 + st.impact * 16, full = ramp(st.f, 30, 34);
+  for (const s of [-1, 1]) {
+    const x = XC + s * 35;
+    let segs = ROWS.map(y => [y - half, y + half]);
+    const lo = ROWS[0] - half + (10 - (ROWS[0] - half)) * full, hi = ROWS[5] + half + (H - 10 - ROWS[5] - half) * full;
+    if (full > 0) segs = [[lo, hi]];
+    const [hx] = P(x, 0, 0), inward = -s;
+    for (const [y0, y1] of segs) {
+      const [, sy0] = P(x, y1, 0), [, sy1] = P(x, y0, 0), w = 9 * S;
+      const g = ctx.createLinearGradient(hx, 0, hx + inward * w, 0);
+      g.addColorStop(0, `rgba(255,170,90,${0.55 * I})`); g.addColorStop(1, 'rgba(255,170,90,0)');
+      ctx.fillStyle = g; ctx.fillRect(Math.min(hx, hx + inward * w), sy0, w, sy1 - sy0);
+      ctx.save(); ctx.shadowColor = 'rgba(238,116,44,0.95)'; ctx.shadowBlur = 12 * I;
+      ctx.strokeStyle = `rgba(255,222,160,${I})`; ctx.lineWidth = 3; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(hx, sy0); ctx.lineTo(hx, sy1); ctx.stroke(); ctx.restore();
+    }
+    // the same hot line runs back along the top edge of the board: it covers the whole broad face
+    const a = P(x, H, 0), b = P(x, H, D);
+    ctx.save(); ctx.shadowColor = 'rgba(238,116,44,0.9)'; ctx.shadowBlur = 8 * I;
+    ctx.strokeStyle = `rgba(240,132,54,${0.9 * I * full})`; ctx.lineWidth = 2.4;
+    ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); ctx.restore();
+  }
+}
+
+function wave(ctx, s, y, d0, d1, head, alpha) {
+  const pts = [];
+  for (let d = d0; d <= d1 + 1e-6; d += 0.8) pts.push(P(XC + s * d, y + 4.2 * Math.sin(2 * Math.PI * (head - d) / 14), 0));
+  if (pts.length < 2) return;
+  const x0 = pts[0][0], x1 = pts[pts.length - 1][0];
+  const mk = (rgb, a) => { const g = ctx.createLinearGradient(x0, 0, x1, 0); g.addColorStop(0, rgba(rgb, 0)); g.addColorStop(0.4, rgba(rgb, 0.45 * a)); g.addColorStop(1, rgba(rgb, a)); return g; };
+  ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]));
+  ctx.strokeStyle = mk([238, 116, 44], 0.65 * alpha); ctx.lineWidth = 5.6; ctx.stroke();
+  ctx.strokeStyle = mk([255, 232, 182], alpha); ctx.lineWidth = 2.2; ctx.stroke();
+  ctx.restore();
+}
+
+function sparks(ctx, s, y, age, alpha) {
+  const a = (1 - age / 5) * alpha; if (a <= 0) return;
+  const x = XC + s * 35;
+  ctx.save(); ctx.strokeStyle = `rgba(255,190,120,${a})`; ctx.lineWidth = 1.4; ctx.lineCap = 'round';
+  for (const dy of [-1, 1]) {
+    const r0 = 3 + age * 3.2, r1 = r0 + 5, ang = 0.75;
+    const p0 = P(x - s * r0 * Math.cos(ang), y + dy * r0 * Math.sin(ang), 0), p1 = P(x - s * r1 * Math.cos(ang), y + dy * r1 * Math.sin(ang), 0);
+    ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p1[0], p1[1]); ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// Infrared rays leave cell 3 sideways. With Aerotherm they stop dead at the boards and scatter back.
+function rays(ctx, st) {
+  const w = st.v === 'with', v = w ? 5 : 11, L = 36, f = st.f;
+  const limit = w ? 35 : Math.max(35, Math.min(203, frontPos(f))), emitEnd = w ? 46 : 60;
+  if (f < 21) return;
+  ROWS.forEach((y, r) => {
+    for (const s of [-1, 1]) {
+      const stagger = ((r * 3) % 7) * 0.9 + (s > 0 ? 0 : 3.5);
+      for (let f0 = 20 + stagger; f0 <= emitEnd; f0 += 7) {
+        const age = f - f0; if (age < 0) continue;
+        const ea = ramp(f0, 19, 26);
+        if (w) { const sa = f - (f0 + limit / v); if (sa >= 0 && sa < 5) sparks(ctx, s, y, sa, ea); }
+        const head = v * age, d0 = Math.max(0, head - L), d1 = Math.min(head, limit);
+        if (d1 <= d0 + 0.5) continue;
+        let a = ea;
+        if (!w) a *= clamp((limit - d1) / 12 + 0.35);
+        wave(ctx, s, y, d0, d1, head, a);
+      }
+    }
+  });
+}
+
+function vent(ctx, st) {
+  if (st.vent <= 0) return;
+  const [bx, by] = P(XC, H + 10, D * 0.5);
+  ctx.save(); ctx.lineCap = 'round';
+  const g = ctx.createLinearGradient(0, by, 0, by - 46);
+  g.addColorStop(0, `rgba(120,140,158,${0.55 * st.vent})`); g.addColorStop(1, 'rgba(120,140,158,0)');
+  ctx.strokeStyle = g; ctx.lineWidth = 1.6;
+  for (let k = 0; k < 3; k++) {
+    ctx.beginPath();
+    for (let t = 0; t <= 1.0001; t += 0.04) {
+      const x = bx + (k - 1) * 9 + 3.5 * Math.sin(t * 9 - st.f * 0.55 + k * 2) * t, yy = by - t * 46;
+      t === 0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function outline(ctx, st) {
+  const p = st.pulse; if (p <= 0) return;
+  for (const j of [1, 2]) {
+    const b = boards[j];
+    ctx.save(); poly(ctx, silhouette(b.x0, b.x1)); ctx.lineJoin = 'round';
+    ctx.strokeStyle = `rgba(67,140,203,${0.3 * p})`; ctx.lineWidth = 2 + 9 * clamp((st.f - 27) / 11); ctx.stroke();
+    ctx.shadowColor = 'rgba(67,140,203,0.8)'; ctx.shadowBlur = 10 * p;
+    ctx.strokeStyle = `rgba(67,140,203,${p})`; ctx.lineWidth = 2.2; ctx.stroke();
+    ctx.restore();
+  }
+}
+
+// Number-free gauges above each cell.
+function gauges(ctx, st) {
+  cells.forEach((c, i) => {
+    const cx = P((c.x0 + c.x1) / 2, H, D * 0.5)[0], x = cx - 6, y = 18, w = 12, h = 42;
+    let sum = 0; for (let k = 0; k <= 10; k++) sum += heatAt(c.x0 + k / 10 * T, st);
+    const e = i === 2 ? st.ember : 0, heat = sum / 11, level = Math.max(0.14, heat * (1 - 0.12 * e));
+    rrect(ctx, x, y, w, h, 6); ctx.fillStyle = '#E7EEF3'; ctx.fill(); ctx.strokeStyle = '#C9D7E1'; ctx.lineWidth = 1; ctx.stroke();
+    const fh = (h - 4) * level;
+    // below the glow point the fill stays blue, so a cool gauge never reads as warm
+    rrect(ctx, x + 2, y + h - 2 - fh, w - 4, fh, 4); ctx.fillStyle = rgba(heat < 0.16 ? BLUE_RGB : heatRgb(heat, e)); ctx.fill();
+  });
+}
+
+function draw(v, f) {
+  const ctx = document.getElementById('c').getContext('2d');
+  ctx.setTransform(SS, 0, 0, SS, 0, 0);
+  ctx.fillStyle = BG; ctx.fillRect(0, 0, CW, CH);
+  const st = state(v, f);
+  drawBase(ctx);
+  cells.forEach((c, i) => { drawCell(ctx, c, st); if (i < N - 1 && v === 'with') drawBoard(ctx, boards[i], i, st); });
+  frontBand(ctx, st);
+  dimVeil(ctx, st);
+  impact(ctx, st);
+  rays(ctx, st);
+  vent(ctx, st);
+  outline(ctx, st);
+  gauges(ctx, st);
+  if (st.fade > 0) { ctx.fillStyle = `rgba(246,249,251,${st.fade})`; ctx.fillRect(0, 0, CW, CH); }
+  return document.getElementById('c').toDataURL('image/png');
+}
+
+// Geometry for build.py's checks, in output pixels.
+function geometry() {
+  return {
+    boards: boards.map(b => silhouette(b.x0, b.x1)),
+    cellCenters: cells.map(c => P((c.x0 + c.x1) / 2, H * 0.5, 0)),
+  };
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+{
+  "gifs": {
+    "propagation-without.gif": {
+      "width": 1200,
+      "height": 675,
+      "frames": 64,
+      "delays_ms": [
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        1550,
+        50,
+        50,
+        50,
+        50
+      ],
+      "global_palette": true,
+      "local_palettes": 0,
+      "loop": 0,
+      "bytes": 4425546
+    },
+    "propagation-with.gif": {
+      "width": 1200,
+      "height": 675,
+      "frames": 64,
+      "delays_ms": [
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        1550,
+        50,
+        50,
+        50,
+        50
+      ],
+      "global_palette": true,
+      "local_palettes": 0,
+      "loop": 0,
+      "bytes": 3869394
+    }
+  },
+  "checks": {
+    "propagation-without.gif: 1200 x 675": true,
+    "propagation-without.gif: exactly 64 frames": true,
+    "propagation-without.gif: 50 ms per frame, 1,550 ms on frame 60": true,
+    "propagation-without.gif: one global color table, no local tables": true,
+    "propagation-without.gif: loops forever": true,
+    "propagation-with.gif: 1200 x 675": true,
+    "propagation-with.gif: exactly 64 frames": true,
+    "propagation-with.gif: 50 ms per frame, 1,550 ms on frame 60": true,
+    "propagation-with.gif: one global color table, no local tables": true,
+    "propagation-with.gif: loops forever": true,
+    "both GIFs share the same color table": true,
+    "frames 1-20 differ only at the boards": true,
+    "with Aerotherm, the four neighbors never warm": true,
+    "no gray mid-tones on the cells (without)": true
+  },
+  "frame_marker": {
+    "pixel": [
+      1199,
+      674
+    ],
+    "colors": [
+      [
+        246,
+        249,
+        251
+      ],
+      [
+        244,
+        247,
+        249
+      ]
+    ]
+  },
+  "frames_1_20_pixels_differing_outside_boards": 0,
+  "neighbor_samples": {
+    "cell 1": {
+      "frame 5": [
+        85,
+        147,
+        201
+      ],
+      "frame 60": [
+        85,
+        147,
+        201
+      ]
+    },
+    "cell 2": {
+      "frame 5": [
+        85,
+        147,
+        201
+      ],
+      "frame 60": [
+        85,
+        147,
+        201
+      ]
+    },
+    "cell 4": {
+      "frame 5": [
+        85,
+        147,
+        201
+      ],
+      "frame 60": [
+        85,
+        147,
+        201
+      ]
+    },
+    "cell 5": {
+      "frame 5": [
+        85,
+        147,
+        201
+      ],
+      "frame 60": [
+        85,
+        147,
+        201
+      ]
+    }
+  },
+  "gray_samples": 0
+}
