@@ -35,21 +35,29 @@ Design the visual concept for the company homepage of **Aerotherm**, using GPT I
 2. `design/concept-mobile.png`: the same page at 390 px wide, with the menu collapsed.
 3. Two matched GIFs of the same thermal runaway, one without Aerotherm and one with it. Make each one from exactly **64 frames**, at the same canvas size (1200 × 675 px), with the same camera angle and lighting. Show each frame for 50 ms (20 fps, 3.2 s of motion), and hold frame 64 for about 1.5 s before the loop restarts at frame 1. Both show five prismatic cells stacked face to face in a cutaway battery module, drawn as described in **How to draw the cells and boards**, and the runaway starts in the middle cell (cell 3). Keep the cells in the same positions in both; in the GIF without Aerotherm, the gaps where the boards go are empty. Frames 1–16 are the same in both apart from the boards, and each frame lines up with the same frame in the other GIF, so the two can be compared side by side. Show heat as glow, infrared rays and heat shimmer, with no flames or explosions.
 
-   Keep the motion smooth: from one frame to the next, change only the heat (color, glow, rays and shimmer), never the camera, cells or boards, and let each frame differ only slightly from the one before so nothing jumps. Ease into and out of each stage. Use one global color palette for every frame so the colors don't flicker.
-   - `design/propagation-without.gif`: no barrier between the cells, so thermal propagation spreads through the module.
-     - Frames 1–8: all five cells are cool blue.
-     - Frames 9–16: cell 3 heats from orange to red-hot.
-     - Frames 17–32: cell 3 vents a thin wisp of gas and sends infrared rays and a rising heat shimmer into cells 2 and 4, which turn orange.
-     - Frames 33–48: cells 2 and 4 turn red-hot and pass the heat on to cells 1 and 5.
-     - Frames 49–64: cells 1 and 5 turn red-hot. By frame 64 the whole module is in thermal runaway.
-   - `design/propagation-with.gif`: a translucent Aerotherm board between the broad faces of every pair of neighboring cells (four boards), and the boards stop thermal propagation.
-     - Frames 1–8: all five cells are cool blue, with the boards in place.
-     - Frames 9–16: as in the other GIF, cell 3 heats from orange to red-hot.
-     - Frames 17–32: cell 3 vents a thin wisp of gas and sends out infrared rays and a heat shimmer, which hit the two boards beside it and stop there. Only the face of each board toward cell 3 glows; the far face stays cool.
-     - Frames 33–48: cell 3 stays red-hot. The boards hold, and cells 2 and 4 stay cool blue.
-     - Frames 49–64: cell 3 dims to a dark ember. The other four cells are still cool blue.
+   The GIF with Aerotherm must make the blocking moment unmistakable: the eye should go straight to the boards stopping the heat. Use these devices, in both GIFs where they apply, so the two stay comparable:
+   - A heat front: heat leaves cell 3 through its broad faces as a visible front of bright orange-red infrared rays and heat shimmer, moving toward its neighbors.
+   - The impact: where a board stands in its way, the front hits it and stops dead. It flattens and spreads across the board's hot face like a wave meeting a wall, and some rays scatter back off it.
+   - A hard hot/cool line: the board's face toward cell 3 glows bright orange while its far face stays cool blue, so the module splits into a red zone and a blue zone exactly at the board.
+   - A highlight: at the moment of impact, a thin cool-blue outline pulses once around the two boards beside cell 3, and the rest of the module dims slightly so the boards stand out, then eases back.
+   - Temperature gauges: a small vertical gauge above each cell, with no numbers, fills and shifts from blue to red as that cell heats, so anyone can see at a glance which cells are hot.
 
-   Use frame 32 of `propagation-with.gif` (the rays stopped at the boards) as the hero visual in the concept images.
+   Keep the motion smooth: from one frame to the next, change only these effects and the heat colors, never the camera, cells or boards, and let each frame differ only slightly from the one before so nothing jumps. Ease into and out of each stage. Use one global color palette for every frame so the colors don't flicker.
+   - `design/propagation-without.gif`: no barrier between the cells, so thermal propagation spreads through the module.
+     - Frames 1–8: all five cells are cool blue, and every gauge is low.
+     - Frames 9–16: cell 3 heats from orange to red-hot, and its gauge fills to the top.
+     - Frames 17–32: cell 3 vents a thin wisp of gas, and its heat front crosses the empty gaps straight into cells 2 and 4, which turn orange as their gauges climb.
+     - Frames 33–48: cells 2 and 4 turn red-hot and send their own heat fronts into cells 1 and 5.
+     - Frames 49–64: cells 1 and 5 turn red-hot. By frame 64 every gauge is full and the whole module is in thermal runaway.
+   - `design/propagation-with.gif`: a translucent Aerotherm board between the broad faces of every pair of neighboring cells (four boards), and the boards stop thermal propagation.
+     - Frames 1–8: all five cells are cool blue, with the boards in place, and every gauge is low.
+     - Frames 9–16: as in the other GIF, cell 3 heats from orange to red-hot, and its gauge fills to the top.
+     - Frames 17–24: cell 3 vents a thin wisp of gas, and its heat front moves out toward the two boards beside it.
+     - Frames 25–32: the impact. The front hits both boards and stops dead, flattening across their hot faces while some rays scatter back. The hot/cool line appears at each board, the outline pulses, and the rest of the module dims.
+     - Frames 33–48: cell 3 stays red-hot and keeps pressing heat against the boards, which hold. Cells 2 and 4 and their gauges stay cool blue, and the dimming eases back.
+     - Frames 49–64: cell 3 dims to a dark ember and the boards' hot faces fade. The other four cells are still cool blue, and only cell 3's gauge is high.
+
+   Use frame 32 of `propagation-with.gif` (the heat front stopped at the boards) as the hero visual in the concept images.
 4. `design/principle-knudsen.gif` (seamless loop): a magnified nanopore network. Air molecules bounce off the pore walls rather than off each other, and heat barely moves through. A dashed line marks the ~70 nm mean free path, longer than the pore itself.
 5. `design/principle-solid.gif` (seamless loop): heat tries to travel along the thin, branching silica skeleton and fades out along its long, narrow paths.
 6. `design/principle-radiation.gif` (seamless loop): two panels side by side. Left, a typical aerogel layer: the convection shimmer stops, but the infrared rays pass through. Right, the Aerotherm board: opacifier particles inside it reflect and scatter the rays, so both the shimmer and the rays stop.
