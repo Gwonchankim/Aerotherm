@@ -7,6 +7,60 @@
   var $ = function (sel, ctx) { return (ctx || doc).querySelector(sel); };
   var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || doc).querySelectorAll(sel)); };
 
+  /* Interface text set from this file, in the page's language (<html lang>). */
+  var LANG = /^ko\b/i.test(root.lang || '') ? 'ko' : 'en';
+  var TEXT = {
+    en: {
+      // [first frame after the stage, title, what happens]
+      stages: [
+        [13, 'Normal operation', 'All five cells are cool.'],
+        [21, 'Fault', 'The middle cell heats up.'],
+        [27, 'Venting', 'Heat and infrared rays leave the failing cell.'],
+        [35, 'Impact', 'Heat reaches the gaps on both sides.'],
+        [47, 'Spread or hold', 'Neighbors heat up, or stay cool behind the boards.'],
+        [61, 'Outcome', 'Full-module runaway, or one cell cooling to an ember.'],
+        [66, 'Reset', 'The sequence fades out and starts again.']
+      ],
+      stageMark: '.',
+      heroPause: 'Pause animation', heroPlay: 'Play animation',
+      pause: 'Pause', play: 'Play',
+      menuOpen: 'Open menu', menuClose: 'Close menu',
+      nameEmpty: 'Enter your name.',
+      emailEmpty: 'Enter your email address.',
+      emailInvalid: 'Enter a valid email address, such as name@company.com.',
+      inquiryEmpty: 'Select an inquiry type.',
+      messageEmpty: 'Tell us about your application.',
+      messageShort: 'Add a little more detail (at least 10 characters).',
+      fixFields: function (n) { return n === 1 ? 'Please correct the highlighted field.' : 'Please correct the ' + n + ' highlighted fields.'; },
+      checking: 'Checking your entries…',
+      valid: 'Your entries are valid. This form is not connected to a server yet, so nothing was sent.'
+    },
+    ko: {
+      stages: [
+        [13, '정상 작동', '다섯 개 셀이 모두 정상 온도입니다.'],
+        [21, '고장 발생', '가운데 셀이 가열됩니다.'],
+        [27, '벤팅', '고장 난 셀에서 열과 적외선이 방출됩니다.'],
+        [35, '도달', '열이 양쪽 셀 사이 틈에 도달합니다.'],
+        [47, '확산 또는 차단', '이웃 셀이 가열되거나, 보드 뒤에서 온도를 유지합니다.'],
+        [61, '결과', '모듈 전체가 열폭주에 이르거나, 셀 하나만 식어 갑니다.'],
+        [66, '처음으로', '장면이 사라진 뒤 처음부터 다시 시작합니다.']
+      ],
+      stageMark: ':',
+      heroPause: '애니메이션 일시정지', heroPlay: '애니메이션 재생',
+      pause: '일시정지', play: '재생',
+      menuOpen: '메뉴 열기', menuClose: '메뉴 닫기',
+      nameEmpty: '이름을 입력해 주세요.',
+      emailEmpty: '이메일 주소를 입력해 주세요.',
+      emailInvalid: '올바른 이메일 주소를 입력해 주세요. 예: name@company.com',
+      inquiryEmpty: '문의 유형을 선택해 주세요.',
+      messageEmpty: '적용 분야에 대해 알려 주세요.',
+      messageShort: '조금 더 자세히 적어 주세요(10자 이상).',
+      fixFields: function (n) { return '표시된 항목 ' + n + '개를 수정해 주세요.'; },
+      checking: '입력 내용을 확인하는 중…',
+      valid: '입력 내용에 문제가 없습니다. 이 양식은 아직 서버에 연결되어 있지 않아 아무것도 전송되지 않았습니다.'
+    }
+  }[LANG];
+
   var motionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   var reduced = !!(motionQuery && motionQuery.matches);
   root.classList.toggle('reduced-motion', reduced);
@@ -21,15 +75,7 @@
   var groups = [];
   var rafId = 0, lastTick = 0;
 
-  var STAGES = [
-    [13, 'Normal operation', 'all five cells are cool'],
-    [21, 'Fault', 'the middle cell heats up'],
-    [27, 'Venting', 'heat and infrared rays leave the failing cell'],
-    [35, 'Impact', 'heat reaches the gaps on both sides'],
-    [47, 'Spread or hold', 'neighbors heat up, or stay cool behind the boards'],
-    [61, 'Outcome', 'full-module runaway, or one cell cooling to an ember'],
-    [66, 'Reset', 'the sequence fades out and starts again']
-  ];
+  var STAGES = TEXT.stages;
   function stageAt(frame) {
     for (var i = 0; i < STAGES.length; i++) if (frame < STAGES[i][0]) return STAGES[i];
     return STAGES[STAGES.length - 1];
@@ -127,7 +173,7 @@
         autoplay: true,
         onState: function (on) {
           heroEl.classList.toggle('is-paused', !on);
-          if (heroLabel) heroLabel.textContent = on ? 'Pause animation' : 'Play animation';
+          if (heroLabel) heroLabel.textContent = on ? TEXT.heroPause : TEXT.heroPlay;
         }
       });
       if (heroBtn) heroBtn.addEventListener('click', function () { hero.setPlaying(!hero.playing); });
@@ -151,12 +197,12 @@
           if (stage !== lastStage) {
             lastStage = stage;
             scrub.setAttribute('aria-valuetext', stage[1] + ': ' + stage[2]);
-            if (stageOut) stageOut.innerHTML = '<b>' + stage[1] + '.</b> ' + stage[2].charAt(0).toUpperCase() + stage[2].slice(1) + '.';
+            if (stageOut) stageOut.innerHTML = '<b>' + stage[1] + TEXT.stageMark + '</b> ' + stage[2];
           }
         },
         onState: function (on) {
           if (controls) controls.classList.toggle('is-paused', !on);
-          if (label) label.textContent = on ? 'Pause' : 'Play';
+          if (label) label.textContent = on ? TEXT.pause : TEXT.play;
         }
       });
       if (btn) btn.addEventListener('click', function () { cmp.setPlaying(!cmp.playing); });
@@ -202,7 +248,7 @@
     function setOpen(open) {
       nav.classList.toggle('is-open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (label) label.textContent = open ? 'Close menu' : 'Open menu';
+      if (label) label.textContent = open ? TEXT.menuClose : TEXT.menuOpen;
     }
     toggle.addEventListener('click', function () { setOpen(toggle.getAttribute('aria-expanded') !== 'true'); });
     nav.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) setOpen(false); });
@@ -213,7 +259,7 @@
       if (toggle.getAttribute('aria-expanded') === 'true' && !e.target.closest('.site-header')) setOpen(false);
     });
     if (window.matchMedia) {
-      var wide = window.matchMedia('(min-width: 1100px)');
+      var wide = window.matchMedia('(min-width: 1200px)');
       var onWide = function (e) { if (e.matches) setOpen(false); };
       if (wide.addEventListener) wide.addEventListener('change', onWide);
       else if (wide.addListener) wide.addListener(onWide);
@@ -249,10 +295,10 @@
 
     var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     var rules = {
-      name: function (v) { return v ? '' : 'Enter your name.'; },
-      email: function (v) { return !v ? 'Enter your email address.' : EMAIL.test(v) ? '' : 'Enter a valid email address, such as name@company.com.'; },
-      inquiry: function (v) { return v ? '' : 'Select an inquiry type.'; },
-      message: function (v) { return !v ? 'Tell us about your application.' : v.length < 10 ? 'Add a little more detail (at least 10 characters).' : ''; }
+      name: function (v) { return v ? '' : TEXT.nameEmpty; },
+      email: function (v) { return !v ? TEXT.emailEmpty : EMAIL.test(v) ? '' : TEXT.emailInvalid; },
+      inquiry: function (v) { return v ? '' : TEXT.inquiryEmpty; },
+      message: function (v) { return !v ? TEXT.messageEmpty : v.length < 10 ? TEXT.messageShort : ''; }
     };
 
     function check(name) {
@@ -277,18 +323,18 @@
       var invalid = Object.keys(rules).filter(function (name) { return !check(name); });
       if (invalid.length) {
         status.className = 'form__status is-error';
-        status.textContent = invalid.length === 1 ? 'Please correct the highlighted field.' : 'Please correct the ' + invalid.length + ' highlighted fields.';
+        status.textContent = TEXT.fixFields(invalid.length);
         form.elements[invalid[0]].focus();
         return;
       }
       var done = function () {
         status.className = 'form__status is-done';
-        status.textContent = 'Your entries are valid. This form is not connected to a server yet, so nothing was sent.';
+        status.textContent = TEXT.valid;
       };
       if (reduced) { done(); return; }
       // The design's loading state, shown briefly while the entries are checked.
       status.className = 'form__status';
-      status.innerHTML = '<span class="loader" aria-hidden="true"><span class="loader__track"></span><span class="loader__fill"></span><span class="loader__barrier"></span></span>Checking your entries…';
+      status.innerHTML = '<span class="loader" aria-hidden="true"><span class="loader__track"></span><span class="loader__fill"></span><span class="loader__barrier"></span></span>' + TEXT.checking;
       pending = window.setTimeout(done, 1000);
     });
   }
