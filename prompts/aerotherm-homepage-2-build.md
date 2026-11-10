@@ -1,4 +1,4 @@
-Build the company homepage for **Aerotherm** as a real, working single page in HTML and CSS. Base it on the design files in `design/` from the previous step: `concept-desktop.png`, `concept-mobile.png`, `hero-loop.gif`, `principle-knudsen.gif`, `principle-solid.gif`, `principle-radiation.gif`, the icons in `design/icons/`, `loading.gif` and `style-notes.md`.
+Build the company homepage for **Aerotherm** as a real, working single page in HTML and CSS. Base it on the design files in `design/` from the previous step: `concept-desktop.png`, `concept-mobile.png`, `propagation-without.gif`, `propagation-with.gif`, `principle-knudsen.gif`, `principle-solid.gif`, `principle-radiation.gif`, the icons in `design/icons/`, `loading.gif` and `style-notes.md`.
 
 **First, review the design**
 Look at every image and GIF before you write any code. Note the layout, colors, type, spacing, and each animation's key frames and timing, using `style-notes.md` where it helps. Where the design conflicts with this prompt (garbled text, invented numbers or logos, a physically wrong picture), follow this prompt and note what you changed.
@@ -25,7 +25,7 @@ Do not invent figures, history, people, test results, patents, certifications, p
 
 **Sections (one page with anchor navigation)**
 1. Header: AEROTHERM wordmark; nav for About, Technology, Product, Applications, R&D, News, Contact; KO / EN switch; a "Contact us" button.
-2. Hero: the company mission in one line, the hero animation, and two calls to action (Explore our technology / Request a sample).
+2. Hero: the company mission in one line, the hero animation (the with-Aerotherm propagation loop), and two calls to action (Explore our technology / Request a sample).
 3. About: who Aerotherm is (founded October 2026 in Pyeongtaek, Korea) and why thermal propagation matters.
 4. Technology: the four principles, each with its own animation (the Knudsen effect, solid conduction and radiation blocking) or chart (a bar chart of the typical 0.011–0.023 W/m·K range against still air), followed by the interactive with/without comparison.
 5. Product: the board, where it sits between cells, and a spec table made of placeholders, including thermal conductivity and radiation-blocking performance.
@@ -37,8 +37,8 @@ Do not invent figures, history, people, test results, patents, certifications, p
 
 **Build rules**
 - All text is real HTML, not baked into images. The nav scrolls to each section, and collapses into a menu on mobile.
-- Recreate the animations in code (CSS keyframes and inline SVG) instead of dropping the GIFs onto the page: the hero loop, the three principle animations, the icons and the loading state. Build the bar chart in HTML or SVG.
-- Make the with/without comparison interactive: a toggle or slider that shows heat cascading through every cell without Aerotherm, and stopping at the first board with it.
+- Recreate the animations in code (CSS keyframes and inline SVG) instead of dropping the GIFs onto the page: the two propagation animations, the three principle animations, the icons and the loading state. Keep the propagation animations' 16 key frames and timing. Build the bar chart in HTML or SVG.
+- Make the with/without comparison interactive: a toggle or slider that switches between the two propagation animations, frame for frame. Without Aerotherm, heat cascades through every cell; with it, heat stops at the boards beside the failing cell.
 - Convert any GIF you still need to a looping MP4 (muted, autoplay, playsinline, with a poster frame) or an animated WebP.
 - Make it responsive from 360 px to 1440 px and wider, following `concept-mobile.png` on small screens. Respect `prefers-reduced-motion` (show a static end state), and use semantic, accessible markup.
 
