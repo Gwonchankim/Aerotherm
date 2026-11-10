@@ -40,6 +40,7 @@ Do not invent figures, history, people, test results, patents, certifications, p
 - Recreate the animations in code (CSS keyframes and inline SVG) instead of dropping the GIFs onto the page: the two propagation animations, the three principle animations, the icons and the loading state. Keep the propagation animations' 16 key frames and timing. Build the bar chart in HTML or SVG.
 - Make the with/without comparison interactive: a toggle or slider that switches between the two propagation animations, frame for frame. Without Aerotherm, heat cascades through every cell; with it, heat stops at the boards beside the failing cell.
 - Convert any GIF you still need to a looping MP4 (muted, autoplay, playsinline, with a poster frame) or an animated WebP.
+- Keep the page light throughout, as in the design, with text and heat colors that meet WCAG AA contrast on the light background.
 - Make it responsive from 360 px to 1440 px and wider, following `concept-mobile.png` on small screens. Respect `prefers-reduced-motion` (show a static end state), and use semantic, accessible markup.
 
 **Deliver**
