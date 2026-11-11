@@ -35,13 +35,10 @@ Every unfilled fact is a visible `{{token}}` with a dashed outline. Search `inde
 | `{{certifications}}` | R&D, "Certifications" | Certifications held, or remove the item |
 | `{{news_2_title}}`, `{{news_2_summary}}`, `{{news_2_date}}` | News, second card (Research) | A real news item, or remove the card |
 | `{{news_3_title}}`, `{{news_3_summary}}`, `{{news_3_date}}` | News, third card (Announcements) | A real news item, or remove the card |
-| `{{street_address}}` | Contact | Street address in Pyeongtaek |
-| `{{contact_phone}}` | Contact | Phone number |
-| `{{contact_email}}` | Contact | Email address |
 
 Not tokens, but still open:
 
-- **Inquiries** go to a Google Form, opened in a new tab from the hero's "Request a sample" button and the two Contact buttons. All three use the plain form link for now. When there is a pre-filled link with the inquiry type set to "샘플 요청" (form editor › ⋮ › Get pre-filled link), put it on the two "Request a sample" buttons. The English page uses the same, Korean form until there is an English one.
+- **Inquiries** go to a Google Form. The Contact section is a heading, one sentence and a single "Contact us" button that goes to the form in the same tab; the hero's "Request a sample" button opens the form in a new tab. Both use the plain form link for now. When there is a pre-filled link with the inquiry type set to "샘플 요청" (form editor › ⋮ › Get pre-filled link), put it on the hero button. The English page uses the same, Korean form until there is an English one. There is no address, phone or email on the page; the footer names Pyeongtaek only.
 - **Evidence for the radiation claim.** Infrared-shielding additives are also used in other high-temperature silica insulation, so the Radiation panel calls the feature a "core function", not a differentiator. Comparative data measured under the same conditions (high-temperature conductivity, or a cell-to-cell propagation test such as UL 9540A for ESS or the GB 38031 thermal propagation test for EVs) would let the page say more.
 - The two pages are separate files. A change to the copy or markup has to be made in both, and text set by script (the animation stage labels and button labels) is in the `TEXT` table at the top of `assets/js/main.js`.
 
@@ -62,7 +59,7 @@ Not tokens, but still open:
 - Technology leads with the radiation panel. Both comparison diagrams (radiation and Knudsen) are two SVG columns with their labels in HTML, so the text stays 13 to 14 px on a phone.
 - The comparison's controls sit above the two animations. Below 820 px only one animation shows at a time, with a switch ("No board" / "With AeroTherm") that keeps the same frame.
 - About shows three facts (founded, location, applications) instead of an icon row. The R&D lab render is removed until there are real sample or test photos.
-- The hero's two buttons sit side by side. The Contact section links to the Google Form instead of an unconnected form, and its place mark is a map pin.
+- The hero's two buttons sit side by side. The Contact section is one button to the Google Form; the unconnected form, the place block and the contact details are removed.
 - The header is sticky, and its links collapse into a menu below 1200 px. The two application images sit in a shared 16:9 frame so the cards align; the ESS image is letterboxed, not cropped.
 
 **Propagation animation**

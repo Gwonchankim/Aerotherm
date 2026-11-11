@@ -512,33 +512,13 @@ if (location.protocol !== 'file:') {
 
   <!-- ============ Contact ============ -->
   <section class="section" id="contact" aria-labelledby="contact-title">
-    <div class="container contact__grid">
-      <div class="contact__intro">
-        <h2 id="contact-title">Samples and technical inquiries</h2>
-        <p class="lead">We take sample requests, technical questions and collaboration proposals through a Google Form. Tell us your cell format and size, the board thickness you need and the operating temperature, and we can answer more precisely.</p>
-        <div class="contact__place">
-          <svg class="icon icon--l" viewBox="0 0 192 192" aria-hidden="true" focusable="false">
-            <path class="ln" d="M96 154s-42-44-42-77a42 42 0 0 1 84 0c0 33-42 77-42 77z"/>
-            <circle class="ln-blue" cx="96" cy="77" r="15"/>
-          </svg>
-          <p><strong>Pyeongtaek, Gyeonggi-do</strong><span>Republic of Korea</span></p>
-        </div>
-        <dl class="contact__details">
-          <dt>Address</dt><dd><span class="ph">{{street_address}}</span></dd>
-          <dt>Phone</dt><dd><span class="ph">{{contact_phone}}</span></dd>
-          <dt>Email</dt><dd><span class="ph">{{contact_email}}</span></dd>
-        </dl>
-      </div>
-
-      <div class="contact__cta">
-          <a class="btn btn--primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeGKNxUqhjmuk2pWLAJkYr2NK5TtNXbAftReMm5hgQ-tCoKkw/viewform" target="_blank" rel="noopener">Request a sample<span class="visually-hidden"> (opens a Google Form in a new tab)</span>
-              <svg class="btn__arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10L10 4M5 4h5v5"/></svg>
-            </a>
-          <a class="btn btn--outline" href="https://docs.google.com/forms/d/e/1FAIpQLSeGKNxUqhjmuk2pWLAJkYr2NK5TtNXbAftReMm5hgQ-tCoKkw/viewform" target="_blank" rel="noopener">Technical or partnership inquiry<span class="visually-hidden"> (opens a Google Form in a new tab)</span>
-              <svg class="btn__arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10L10 4M5 4h5v5"/></svg>
-            </a>
-          <p class="note">The Google Form opens in a new tab. It is in Korean for now; you can answer in English.</p>
-        </div>
+    <div class="container contact">
+      <h2 id="contact-title">Samples and technical inquiries</h2>
+      <p class="lead">We take sample requests, technical questions and collaboration proposals through a Google Form. Tell us your cell format and size, the board thickness you need and the operating temperature, and we can answer more precisely.</p>
+      <a class="btn btn--primary contact__btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeGKNxUqhjmuk2pWLAJkYr2NK5TtNXbAftReMm5hgQ-tCoKkw/viewform">Contact us
+        <svg class="btn__arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+      </a>
+      <p class="note contact__note">The form is in Korean; you can answer in English.</p>
     </div>
   </section>
 </main>

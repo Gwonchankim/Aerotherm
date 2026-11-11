@@ -513,33 +513,12 @@ if (location.protocol !== 'file:') {
 
   <!-- ============ Contact ============ -->
   <section class="section" id="contact" aria-labelledby="contact-title">
-    <div class="container contact__grid">
-      <div class="contact__intro">
-        <h2 id="contact-title">샘플 및 기술 문의</h2>
-        <p class="lead">샘플 요청, 기술 문의, 협업 제안은 구글 폼으로 받습니다. 셀 형태와 크기, 원하는 두께, 사용 온도를 함께 적어 주시면 더 정확히 답변드릴 수 있습니다.</p>
-        <div class="contact__place">
-          <svg class="icon icon--l" viewBox="0 0 192 192" aria-hidden="true" focusable="false">
-            <path class="ln" d="M96 154s-42-44-42-77a42 42 0 0 1 84 0c0 33-42 77-42 77z"/>
-            <circle class="ln-blue" cx="96" cy="77" r="15"/>
-          </svg>
-          <p><strong>경기도 평택</strong><span>대한민국</span></p>
-        </div>
-        <dl class="contact__details">
-          <dt>주소</dt><dd><span class="ph">{{street_address}}</span></dd>
-          <dt>전화</dt><dd><span class="ph">{{contact_phone}}</span></dd>
-          <dt>이메일</dt><dd><span class="ph">{{contact_email}}</span></dd>
-        </dl>
-      </div>
-
-      <div class="contact__cta">
-          <a class="btn btn--primary" href="https://docs.google.com/forms/d/e/1FAIpQLSeGKNxUqhjmuk2pWLAJkYr2NK5TtNXbAftReMm5hgQ-tCoKkw/viewform" target="_blank" rel="noopener">샘플 요청<span class="visually-hidden"> (새 창에서 구글 폼 열기)</span>
-              <svg class="btn__arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10L10 4M5 4h5v5"/></svg>
-            </a>
-          <a class="btn btn--outline" href="https://docs.google.com/forms/d/e/1FAIpQLSeGKNxUqhjmuk2pWLAJkYr2NK5TtNXbAftReMm5hgQ-tCoKkw/viewform" target="_blank" rel="noopener">기술·협업 문의<span class="visually-hidden"> (새 창에서 구글 폼 열기)</span>
-              <svg class="btn__arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10L10 4M5 4h5v5"/></svg>
-            </a>
-          <p class="note">구글 폼이 새 창에서 열립니다.</p>
-        </div>
+    <div class="container contact">
+      <h2 id="contact-title">샘플 및 기술 문의</h2>
+      <p class="lead">샘플 요청, 기술 문의, 협업 제안은 구글 폼으로 받습니다. 셀 형태와 크기, 원하는 두께, 사용 온도를 함께 적어 주시면 더 정확히 답변드릴 수 있습니다.</p>
+      <a class="btn btn--primary contact__btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeGKNxUqhjmuk2pWLAJkYr2NK5TtNXbAftReMm5hgQ-tCoKkw/viewform">문의하기
+        <svg class="btn__arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+      </a>
     </div>
   </section>
 </main>
