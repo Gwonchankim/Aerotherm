@@ -60,7 +60,7 @@ Not tokens, but still open:
 - The comparison's controls sit above the two animations. Below 820 px only one animation shows at a time, with a switch ("No board" / "With AeroTherm") that keeps the same frame.
 - About shows three facts (founded, location, applications) instead of an icon row. The R&D lab render is removed until there are real sample or test photos.
 - The hero's two buttons sit side by side. The Contact section is one button to the Google Form; the unconnected form, the place block and the contact details are removed.
-- The header is sticky, and its links collapse into a menu below 1200 px. The two application images sit in a shared 16:9 frame so the cards align; the ESS image is letterboxed, not cropped.
+- The header is sticky, and its links collapse into a menu below 1200 px. The two application images are flat zoom-sequence diagrams (`design/assets/application-*-diagram.png`, drawn from `prompts/aerotherm-application-diagrams.md`) in a shared 16:9 frame, with a one-line legend for the pale blue boards.
 
 **Propagation animation**
 
