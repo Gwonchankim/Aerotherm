@@ -1,22 +1,23 @@
 # Aerotherm homepage
 
-A static single page: `index.html` plus `assets/` (CSS, JavaScript, fonts, images). No framework and no build step. Open `index.html` from disk or serve the folder from any static server.
+A static single page in two languages: `index.html` (English) and `ko/index.html` (Korean), sharing `assets/` (CSS, JavaScript, fonts, images). No framework and no build step. Open either file from disk or serve the folder from any static server.
 
 ```text
 site/
-├── index.html
+├── index.html                English page
+├── ko/index.html             Korean page (same structure, translated text)
 ├── assets/
 │   ├── css/styles.css        design tokens (custom properties) and all styles
 │   ├── js/propagation.js     canvas renderer, ported from design-claude/source/render.html
-│   ├── js/main.js            animation clocks and controls, menu, form validation
-│   ├── fonts/                Manrope and Inter (WOFF2) with their OFL licenses
-│   └── img/                  WebP illustrations and the two no-JavaScript stills
-└── review/                   screenshots of the built page
+│   ├── js/main.js            animation clocks and controls, menu, form validation, EN/KO interface text
+│   ├── fonts/                Manrope and Inter (WOFF2), Pretendard for Hangul, with their OFL licenses
+│   └── img/                  logo and favicon (SVG), WebP illustrations, the two no-JavaScript stills
+└── review/                   screenshots of the built pages
 ```
 
 ## Placeholders that need real Aerotherm data
 
-Every unfilled fact is a visible `{{token}}` with a dashed outline. Search `index.html` for `{{` to find them all.
+Every unfilled fact is a visible `{{token}}` with a dashed outline. Search `index.html` and `ko/index.html` for `{{` to find them all; both pages use the same tokens.
 
 | Token | Where | What is needed |
 | --- | --- | --- |
@@ -38,7 +39,9 @@ Every unfilled fact is a visible `{{token}}` with a dashed outline. Search `inde
 
 Not tokens, but still open:
 
-- The KO and EN links both point to `#`. A Korean page will also need a Hangul font, because Manrope and Inter have no Korean glyphs.
+- The Korean copy was translated from the English page and has not been reviewed by Aerotherm. Check the terms in particular: 열전이 (thermal propagation), 열폭주 (thermal runaway), 적외선 불투명화제 (infrared opacifier).
+- The two pages are separate files. A change to the copy or markup has to be made in both, and text set by script (animation stage labels, form messages) is in the `TEXT` table at the top of `assets/js/main.js`.
+- The logo spells the name "AeroTherm"; the copy keeps "Aerotherm", as in the supplied facts. Pick one.
 - The contact form validates in the browser and sends nothing. It needs a backend, and its submit button stays disabled without JavaScript.
 
 ## Where the page departs from the design, and why
@@ -52,6 +55,18 @@ Not tokens, but still open:
 - The conductivity panel states the styrofoam and glass wool comparison, labels 0.011–0.023 W/m·K as typical of the material class, and adds a placeholder for Aerotherm's own value. Its bars are drawn to scale from the two supplied figures instead of the concept's uncalibrated bars.
 - The spec table has the new "Radiation-blocking performance" row, and its dashes are placeholder tokens. "Thermal evaluation", patents, certifications, two news cards and the contact details are tokens too.
 - "Form design concept" under the button is replaced by the note that the form is not connected. Company is optional.
+
+**Logo**
+
+- The logo was supplied as a small raster image (1536 × 1024 WebP). `logo.svg`, `logo-stacked.svg` and `favicon.svg` are vector traces of it: the mark is redrawn as three polygons and the wordmark is traced from the pixels, so letter edges are close but not exact. Replace them with the original vector artwork when it is available.
+- The header uses the mark and wordmark side by side, because the supplied stacked arrangement is too small to read at header height. The footer uses the stacked arrangement as supplied. The favicon is the mark alone.
+- The logo's slate (`#2D424A`) and orange (`#E57D3E`) differ slightly from the page's navy (`#102A43`) and heat orange (`#EE742C`) from `style-notes.md`. The page palette is unchanged.
+
+**Korean page**
+
+- KO and EN in the header link the two pages. The Korean page is a separate static file, so it works without JavaScript and from disk.
+- Hangul is set in Pretendard (SIL OFL), because Manrope and Inter have no Korean glyphs; Latin text and numerals stay in Manrope and Inter. Pretendard ships as 92 small files split by Unicode range (3.1 MB in the repository), and a visitor downloads only the ones the page uses (17 files for the current copy).
+- Korean headings are set slightly smaller than the English ones, and lines break between words (`word-break: keep-all`).
 
 **Propagation animation**
 
@@ -71,7 +86,7 @@ Not tokens, but still open:
 
 **Layout and components**
 
-- The header is sticky, and its links collapse into a menu below 1100 px.
+- The header is sticky, and its links collapse into a menu below 1200 px.
 - The three principle diagrams are redrawn as inline SVG with their captions in HTML, and the radiation diagram is two SVGs side by side, so labels stay readable at 360 px.
 - The loading state is built from HTML elements and CSS keyframes, not SVG. It shows while a canvas waits for its first frame and for one second after a valid form submit.
 - The two application images sit in a shared 16:9 frame so the cards align; the ESS image is letterboxed, not cropped.
@@ -84,11 +99,12 @@ Not tokens, but still open:
 
 ## Checks run
 
-- Rendered in Chromium at 320 to 1920 px wide with no horizontal scrolling.
+- Both pages rendered in Chromium at 360 to 1440 px wide with no horizontal scrolling (the English page from 320 to 1920 px before the logo change).
 - The hero and comparison animate, pause while off screen, and stay on one clock. Play/pause and the scrubber (mouse and keyboard) move both canvases together.
 - Live canvas frames match the design's reference stills (`design-claude/review/`) to within GIF palette error.
 - With `prefers-reduced-motion`, the canvases show frame 32 (with) and frame 60 (without), and no CSS animation runs.
 - Without JavaScript, `hero-frame-32.png` is shown and the navigation links wrap under the header.
 - The form reports empty and invalid fields, focuses the first one, and confirms a valid entry without sending anything.
+- On the Korean page, the stage labels, button labels and form messages appear in Korean, Pretendard loads, and the KO and EN links switch pages.
 
 Not checked: Safari and Firefox (only Chromium was available), and screen readers.

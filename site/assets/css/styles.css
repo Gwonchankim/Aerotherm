@@ -40,8 +40,8 @@
   --color-focus: #2A6FAB;
 
   /* Type */
-  --font-heading: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-heading: "Manrope", "Pretendard Variable", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", "Pretendard Variable", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Segoe UI", system-ui, -apple-system, sans-serif;
   --fs-h1: clamp(2.1875rem, 1.35rem + 3.1vw, 3.25rem);     /* 35 to 52 px */
   --fs-h2: clamp(1.9375rem, 1.3rem + 2.3vw, 3rem);         /* 31 to 48 px */
   --fs-h3: clamp(1.75rem, 1.35rem + 1.5vw, 2.5rem);        /* 28 to 40 px */
@@ -79,7 +79,7 @@
   --header-h: 72px;
   --section-pad: clamp(48px, 3vw + 36px, 96px);
 }
-@media (min-width: 1100px) {
+@media (min-width: 1200px) {
   :root { --header-h: 96px; }
 }
 
@@ -207,10 +207,8 @@ sub { font-size: 0.72em; line-height: 0; }
   content: ""; position: absolute; left: var(--margin); right: var(--margin); bottom: 0;
   height: 1px; background: var(--color-rule);
 }
-.wordmark {
-  font-family: var(--font-heading); font-weight: 700; font-size: 1.25rem; letter-spacing: 0.01em;
-  color: var(--color-navy); text-decoration: none; line-height: 1;
-}
+.logo { display: inline-flex; align-items: center; flex: none; }
+.logo img { display: block; width: auto; height: 32px; }
 .site-nav { margin-left: auto; }
 .site-nav ul { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-24); }
 .site-nav a, .footer-nav a {
@@ -225,16 +223,16 @@ sub { font-size: 0.72em; line-height: 0; }
 .btn--header { min-height: var(--control-h-s); min-width: 140px; font-size: 0.8125rem; }
 .nav-toggle { display: none; }
 
-@media (min-width: 1100px) {
-  .wordmark { font-size: 1.625rem; }
+@media (min-width: 1200px) {
+  .logo img { height: 44px; }
   .site-nav { margin-left: auto; margin-right: auto; }
   .lang { margin-right: var(--space-32); }
 }
 
 /* Collapsed menu below 1100 px. Without JavaScript the links simply wrap under the bar. */
-@media (max-width: 1099.98px) {
+@media (max-width: 1199.98px) {
   .site-header__inner { flex-wrap: wrap; gap: var(--space-8) var(--space-16); }
-  .wordmark { margin-right: auto; padding-block: var(--space-24); }
+  .logo { margin-right: auto; padding-block: 20px; }
   .btn--header { display: none; }
   .site-nav { order: 5; width: 100%; margin: 0; padding-bottom: var(--space-12); }
 
@@ -593,7 +591,7 @@ sub { font-size: 0.72em; line-height: 0; }
   .rd__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gutter); align-items: start; }
   .rd__figure { margin-top: var(--space-32); }
 }
-@media (min-width: 1100px) {
+@media (min-width: 1200px) {
   .rd-items { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: var(--space-64); }
 }
 
@@ -662,7 +660,7 @@ sub { font-size: 0.72em; line-height: 0; }
 /* ---------- Footer ---------- */
 .site-footer { background: var(--color-bg); }
 .site-footer__inner { display: grid; gap: var(--space-24); padding-block: var(--space-48); border-top: 1px solid var(--color-rule); }
-.site-footer .wordmark { font-size: 1.375rem; }
+.site-footer .logo img { width: 132px; height: auto; }
 .site-footer address { margin-top: var(--space-24); font-style: normal; font-size: var(--fs-small); color: var(--color-text-secondary); }
 .footer-nav ul { display: flex; flex-wrap: wrap; gap: 0 var(--space-12); }
 .footer-nav li + li::before { content: "/"; margin-right: var(--space-12); color: var(--color-text-secondary); }
@@ -674,6 +672,22 @@ sub { font-size: 0.72em; line-height: 0; }
   .site-footer__brand { grid-row: span 2; }
   .site-footer__legal { text-align: right; align-self: end; }
 }
+
+/* ---------- Korean page (ko/index.html) ----------
+   Hangul comes from Pretendard (assets/fonts/pretendard/), loaded only by the Korean page. */
+html:lang(ko) {
+  word-break: keep-all;                                    /* break between words, not inside them */
+  --fs-h1: clamp(2rem, 1.3rem + 2.7vw, 3rem);              /* Hangul reads larger than Latin at the same size */
+  --fs-h2: clamp(1.75rem, 1.22rem + 2vw, 2.625rem);
+  --fs-h3: clamp(1.625rem, 1.3rem + 1.2vw, 2.25rem);
+  --fs-card-title: clamp(1.3125rem, 1.24rem + 0.3vw, 1.5rem);
+}
+html:lang(ko) body { line-height: 1.65; }
+html:lang(ko) h1, html:lang(ko) h2, html:lang(ko) h3, html:lang(ko) h4 { letter-spacing: -0.02em; line-height: 1.28; }
+html:lang(ko) .eyebrow, html:lang(ko) .tag, html:lang(ko) .kicker, html:lang(ko) .news-card__cat { letter-spacing: 0; }
+html:lang(ko) .eyebrow, html:lang(ko) .tag { text-transform: none; }
+html:lang(ko) .eyebrow, html:lang(ko) .news-card__cat { font-size: 0.875rem; }
+html:lang(ko) .news-card__cat { font-size: 0.8125rem; }
 
 /* ---------- Reduced motion: no autoplay anywhere; figures rest in a readable state ---------- */
 @media (prefers-reduced-motion: reduce) {
