@@ -1,4 +1,4 @@
-/* Aerotherm homepage behavior: propagation players, mobile menu, section highlight, contact form. */
+/* AeroTherm homepage behavior: propagation players, mobile menu, section highlight, landing on #links. */
 (function () {
   'use strict';
 
@@ -19,21 +19,12 @@
         [35, 'Impact', 'Heat reaches the gaps on both sides.'],
         [47, 'Spread or hold', 'Neighbors heat up, or stay cool behind the boards.'],
         [61, 'Outcome', 'Full-module runaway, or one cell cooling to an ember.'],
-        [66, 'Reset', 'The sequence fades out and starts again.']
+        [66, 'Reset', 'The sequence returns to the start.']
       ],
       stageMark: '.',
       heroPause: 'Pause animation', heroPlay: 'Play animation',
       pause: 'Pause', play: 'Play',
-      menuOpen: 'Open menu', menuClose: 'Close menu',
-      nameEmpty: 'Enter your name.',
-      emailEmpty: 'Enter your email address.',
-      emailInvalid: 'Enter a valid email address, such as name@company.com.',
-      inquiryEmpty: 'Select an inquiry type.',
-      messageEmpty: 'Tell us about your application.',
-      messageShort: 'Add a little more detail (at least 10 characters).',
-      fixFields: function (n) { return n === 1 ? 'Please correct the highlighted field.' : 'Please correct the ' + n + ' highlighted fields.'; },
-      checking: 'Checking your entries…',
-      valid: 'Your entries are valid. This form is not connected to a server yet, so nothing was sent.'
+      menuOpen: 'Open menu', menuClose: 'Close menu'
     },
     ko: {
       stages: [
@@ -43,21 +34,12 @@
         [35, '도달', '열이 양쪽 셀 사이 틈에 도달합니다.'],
         [47, '확산 또는 차단', '이웃 셀이 가열되거나, 보드 뒤에서 온도를 유지합니다.'],
         [61, '결과', '모듈 전체가 열폭주에 이르거나, 셀 하나만 식어 갑니다.'],
-        [66, '처음으로', '장면이 사라진 뒤 처음부터 다시 시작합니다.']
+        [66, '처음으로', '처음 장면으로 돌아갑니다.']
       ],
       stageMark: ':',
       heroPause: '애니메이션 일시정지', heroPlay: '애니메이션 재생',
       pause: '일시정지', play: '재생',
-      menuOpen: '메뉴 열기', menuClose: '메뉴 닫기',
-      nameEmpty: '이름을 입력해 주세요.',
-      emailEmpty: '이메일 주소를 입력해 주세요.',
-      emailInvalid: '올바른 이메일 주소를 입력해 주세요. 예: name@company.com',
-      inquiryEmpty: '문의 유형을 선택해 주세요.',
-      messageEmpty: '적용 분야에 대해 알려 주세요.',
-      messageShort: '조금 더 자세히 적어 주세요(10자 이상).',
-      fixFields: function (n) { return '표시된 항목 ' + n + '개를 수정해 주세요.'; },
-      checking: '입력 내용을 확인하는 중…',
-      valid: '입력 내용에 문제가 없습니다. 이 양식은 아직 서버에 연결되어 있지 않아 아무것도 전송되지 않았습니다.'
+      menuOpen: '메뉴 열기', menuClose: '메뉴 닫기'
     }
   }[LANG];
 
@@ -190,9 +172,10 @@
         autoplay: true,
         onFrame: function (f) {
           if (!scrub) return;
-          var shown = Math.min(f, AP.LAST_FRAME);
+          var maxFrame = parseFloat(scrub.max) || AP.LAST_FRAME;   // the scrubber ends on the end state
+          var shown = Math.min(f, maxFrame);
           if (!scrubbing) scrub.value = shown;
-          scrub.style.setProperty('--fill', ((shown - 1) / (AP.LAST_FRAME - 1) * 100).toFixed(2) + '%');
+          scrub.style.setProperty('--fill', ((shown - 1) / (maxFrame - 1) * 100).toFixed(2) + '%');
           var stage = stageAt(f);
           if (stage !== lastStage) {
             lastStage = stage;
@@ -214,6 +197,18 @@
           cmp.t = AP.timeAt(parseFloat(scrub.value));
           cmp.render();
           scrubbing = false;
+        });
+      }
+      // Small screens show one canvas at a time; the switch flips between them on the same frame.
+      var views = $$('.compare__switch [data-show]', cmpEl);
+      if (views.length) {
+        cmpEl.setAttribute('data-view', 'with');
+        views.forEach(function (b) {
+          b.addEventListener('click', function () {
+            cmpEl.setAttribute('data-view', b.getAttribute('data-show'));
+            views.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+            cmp.render();
+          });
         });
       }
       cmp.render();
@@ -283,66 +278,36 @@
     Object.keys(links).forEach(function (id) { var s = doc.getElementById(id); if (s) io.observe(s); });
   }
 
+
   /* ------------------------------------------------------------------
-   * Contact form: client-side validation only. Nothing is sent anywhere.
+   * Opening a link such as #technology: the browser scrolls before the web fonts
+   * arrive, and the reflow can leave the heading under the sticky header.
+   * Once fonts and the page have loaded, settle on the target again (instantly),
+   * unless the visitor has already scrolled.
    * ------------------------------------------------------------------ */
-  function initForm() {
-    var form = $('#contact-form');
-    if (!form) return;
-    var status = $('#form-status'), submit = $('[type="submit"]', form);
-    form.setAttribute('novalidate', '');   // use the messages below instead of the browser's bubbles
-    if (submit) submit.disabled = false;   // disabled in the markup so it cannot post without JavaScript
-
-    var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    var rules = {
-      name: function (v) { return v ? '' : TEXT.nameEmpty; },
-      email: function (v) { return !v ? TEXT.emailEmpty : EMAIL.test(v) ? '' : TEXT.emailInvalid; },
-      inquiry: function (v) { return v ? '' : TEXT.inquiryEmpty; },
-      message: function (v) { return !v ? TEXT.messageEmpty : v.length < 10 ? TEXT.messageShort : ''; }
+  function settleHashTarget() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    var target = id && doc.getElementById(id);
+    if (!target) return;
+    var moved = false;
+    ['wheel', 'touchstart', 'keydown'].forEach(function (type) {
+      window.addEventListener(type, function () { moved = true; }, { once: true, passive: true });
+    });
+    var go = function () {
+      if (moved) return;
+      var prev = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      target.scrollIntoView({ block: 'start' });
+      root.style.scrollBehavior = prev;
     };
-
-    function check(name) {
-      var field = form.elements[name], err = doc.getElementById('error-' + name);
-      var message = rules[name](field.value.trim());
-      if (message) field.setAttribute('aria-invalid', 'true'); else field.removeAttribute('aria-invalid');
-      if (err) err.textContent = message;
-      return !message;
-    }
-
-    Object.keys(rules).forEach(function (name) {
-      var field = form.elements[name];
-      field.addEventListener('blur', function () { if (field.value.trim() || field.hasAttribute('aria-invalid')) check(name); });
-      field.addEventListener('input', function () { if (field.hasAttribute('aria-invalid')) check(name); });
-      field.addEventListener('change', function () { if (field.hasAttribute('aria-invalid')) check(name); });
-    });
-
-    var pending = 0;
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      window.clearTimeout(pending);
-      var invalid = Object.keys(rules).filter(function (name) { return !check(name); });
-      if (invalid.length) {
-        status.className = 'form__status is-error';
-        status.textContent = TEXT.fixFields(invalid.length);
-        form.elements[invalid[0]].focus();
-        return;
-      }
-      var done = function () {
-        status.className = 'form__status is-done';
-        status.textContent = TEXT.valid;
-      };
-      if (reduced) { done(); return; }
-      // The design's loading state, shown briefly while the entries are checked.
-      status.className = 'form__status';
-      status.innerHTML = '<span class="loader" aria-hidden="true"><span class="loader__track"></span><span class="loader__fill"></span><span class="loader__barrier"></span></span>' + TEXT.checking;
-      pending = window.setTimeout(done, 1000);
-    });
+    if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function () { window.requestAnimationFrame(go); });
+    window.addEventListener('load', function () { window.requestAnimationFrame(go); }, { once: true });
   }
 
   function init() {
+    settleHashTarget();
     initNav();
     initSectionHighlight();
-    initForm();
     initPropagation();
   }
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init);

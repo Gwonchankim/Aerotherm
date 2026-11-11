@@ -689,6 +689,64 @@ html:lang(ko) .eyebrow, html:lang(ko) .tag { text-transform: none; }
 html:lang(ko) .eyebrow, html:lang(ko) .news-card__cat { font-size: 0.875rem; }
 html:lang(ko) .news-card__cat { font-size: 0.8125rem; }
 
+/* ---------- Review fixes: headings without eyebrows, facts, comparison, contact ---------- */
+/* Headings now open their blocks, with no eyebrow label above them. */
+.hero h1:first-child,
+.section-head > h2:first-child,
+.about__grid h2:first-child,
+.rd__grid h2:first-child,
+.product__intro > h2:first-child,
+.contact__intro > h2:first-child { margin-top: 0; }
+
+/* Hero: the two buttons sit side by side. */
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-12); max-width: none; }
+
+/* Marks an illustration of how something works, not data. */
+.fig-tag { font-size: var(--fs-label); font-weight: 500; color: var(--color-text-secondary); }
+
+/* About: three plain facts instead of an icon row. */
+.facts { display: grid; margin: var(--space-48) 0 0; }
+.facts > div { display: flex; justify-content: space-between; gap: var(--space-16); padding-block: var(--space-16); border-top: 1px solid var(--color-rule); }
+.facts > div:last-child { border-bottom: 1px solid var(--color-rule); }
+.facts dt { font-size: var(--fs-small); color: var(--color-text-secondary); }
+.facts dd { margin: 0; font-weight: 500; color: var(--color-navy); text-align: right; }
+@media (min-width: 900px) {
+  .facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); }
+  .facts > div, .facts > div:last-child { display: block; padding-block: var(--space-16) 0; border-bottom: 0; }
+  .facts dd { margin-top: var(--space-4); font-size: var(--fs-item-title); text-align: left; }
+}
+
+/* Comparison: the "illustration" tag right under the title, controls above the cards,
+   and on small screens one card at a time, switched on the same frame. */
+.compare__head { display: block; margin-bottom: var(--space-16); }
+.compare__head .fig-tag { margin-top: var(--space-8); }
+.compare__controls { margin-top: 0; margin-bottom: var(--space-24); }
+.compare__switch { display: none; }
+@media (max-width: 819.98px) {
+  .js .compare__switch { display: flex; margin-bottom: var(--space-12); border: 1px solid var(--color-navy); border-radius: var(--radius-s); overflow: hidden; }
+  .compare__switch button {
+    flex: 1 1 0; min-height: var(--control-h-s); padding: 0 var(--space-12);
+    border: 0; background: var(--color-panel); color: var(--color-navy);
+    font: 600 var(--fs-ui)/1.2 var(--font-body); cursor: pointer;
+  }
+  .compare__switch button + button { border-left: 1px solid var(--color-navy); }
+  .compare__switch button[aria-pressed="true"] { background: var(--color-navy); color: #fff; }
+  .compare[data-view="with"] .compare__card[data-side="without"],
+  .compare[data-view="without"] .compare__card[data-side="with"] { display: none; }
+}
+
+/* R&D: text only until there are real sample or test photos. */
+@media (min-width: 900px) {
+  .rd__grid--text { grid-template-columns: minmax(0, 46em); }
+}
+
+/* Contact: links to the Google Form. */
+.contact__cta { display: grid; gap: var(--space-16); align-content: start; }
+.contact__cta .btn { width: 100%; }
+@media (min-width: 900px) {
+  .contact__cta { max-width: 420px; padding-top: var(--space-8); }
+}
+
 /* ---------- Reduced motion: no autoplay anywhere; figures rest in a readable state ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

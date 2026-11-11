@@ -7,8 +7,9 @@
  *   - an optional view rectangle crops the 1200 x 675 scene to the module;
  *   - blur and glow radii, which canvas measures in bitmap pixels, scale with the canvas;
  *   - the static base is cached, and its soft shadow has a fallback where canvas filters are missing;
- *   - the fade-in / fade-out table is interpolated so fractional frames work;
- *   - frameAt() / timeAt() map elapsed time to a frame (50 ms per frame, 1.5 s hold on frame 60).
+ *   - played at half the GIF's speed (100 ms per frame), with a 2 s hold on frame 60;
+ *   - no fade to the background between loops: the end state cross-fades back to the first frame;
+ *   - frameAt() / timeAt() map elapsed time to a frame.
  */
 (function (global) {
   'use strict';
@@ -81,21 +82,8 @@
   var sstep = function (t) { t = clamp(t); return t * t * (3 - 2 * t); };
   var ramp = function (f, a, b) { return sstep((f - a) / (b - a)); };
 
-  // The GIF's fade table, keyed by whole frames: {1: .9, 2: .66, 3: .38, 4: .12, 61: .14, 62: .4, 63: .66, 64: .88}.
-  // Interpolated linearly so fractional frames fade smoothly; whole frames keep the table's values,
-  // and the veil closes fully at 65, where the loop wraps to frame 1.
-  var FADE = [[1, 0.9], [2, 0.66], [3, 0.38], [4, 0.12], [5, 0], [60, 0], [61, 0.14], [62, 0.4], [63, 0.66], [64, 0.88], [65, 1]];
-  function fadeAt(f) {
-    if (f <= FADE[0][0]) return FADE[0][1];
-    for (var i = 1; i < FADE.length; i++) {
-      if (f <= FADE[i][0]) {
-        var a = FADE[i - 1], b = FADE[i];
-        return a[1] + (b[1] - a[1]) * (f - a[0]) / (b[0] - a[0]);
-      }
-    }
-    return 1;
-  }
-
+  // The GIFs fade to the background between loops. On the page that read as a blink every cycle,
+  // so there is no fade here: draw() cross-fades the end state back to frame 1 instead.
   function state(v, f) {
     var w = v === 'with';
     return {
@@ -107,7 +95,7 @@
       board: w ? ramp(f, 27, 31) * (1 - 0.8 * ramp(f, 46, 58)) : 0,   // hot face glow
       pulse: w ? (f < 27 || f > 38 ? 0 : f <= 32 ? sstep((f - 27) / 5) : 1 - sstep((f - 32) / 6)) : 0,
       dim: w ? ramp(f, 27, 31) * (1 - ramp(f, 38, 46)) : 0,
-      fade: fadeAt(f)
+      fade: 0
     };
   }
 
@@ -380,11 +368,12 @@
     });
   }
 
-  // ---------- playback clock: 50 ms per frame, frame 60 held for an extra 1.5 s ----------
-  var FRAME_MS = 50, HOLD_FRAME = 60, HOLD_MS = 1500, LAST_FRAME = 64;
-  var T_HOLD = (HOLD_FRAME - 1) * FRAME_MS;                            // 2950 ms: frame 60 is reached
-  var T_RESUME = T_HOLD + HOLD_MS;                                     // 4450 ms: the fade-out begins
-  var CYCLE_MS = T_RESUME + (LAST_FRAME + 1 - HOLD_FRAME) * FRAME_MS;  // 4700 ms, as in the GIFs
+  // ---------- playback clock: 100 ms per frame, frame 60 held for 2 s, then a 0.5 s cross-fade ----------
+  // Half the GIF's speed, so the moment the heat reaches the boards is easy to follow.
+  var FRAME_MS = 100, HOLD_FRAME = 60, HOLD_MS = 2000, LAST_FRAME = 64;
+  var T_HOLD = (HOLD_FRAME - 1) * FRAME_MS;                            // 5900 ms: frame 60 is reached
+  var T_RESUME = T_HOLD + HOLD_MS;                                     // 7900 ms: the cross-fade begins
+  var CYCLE_MS = T_RESUME + (LAST_FRAME + 1 - HOLD_FRAME) * FRAME_MS;  // 8400 ms per loop
 
   // Elapsed milliseconds -> fractional frame in [1, 65).
   function frameAt(ms) {
@@ -434,22 +423,36 @@
       return base;
     }
 
-    function draw(v, f) {
-      var layer = baseLayer();
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
-      ctx.drawImage(layer, 0, 0);
-      setView(ctx);
+    function scene(c, v, f) {
+      c.setTransform(1, 0, 0, 1, 0, 0);
+      c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
+      c.drawImage(baseLayer(), 0, 0);
+      setView(c);
       var st = state(v, f); st.px = px;
-      cells.forEach(function (c, i) { drawCell(ctx, c, st); if (i < N - 1 && v === 'with') drawBoard(ctx, boards[i], i, st); });
-      frontBand(ctx, st);
-      dimVeil(ctx, st);
-      impact(ctx, st);
-      rays(ctx, st);
-      vent(ctx, st);
-      outline(ctx, st);
-      gauges(ctx, st);
-      if (st.fade > 0) { ctx.fillStyle = 'rgba(246,249,251,' + st.fade + ')'; ctx.fillRect(0, 0, CW, CH); }
+      cells.forEach(function (cell, i) { drawCell(c, cell, st); if (i < N - 1 && v === 'with') drawBoard(c, boards[i], i, st); });
+      frontBand(c, st);
+      dimVeil(c, st);
+      impact(c, st);
+      rays(c, st);
+      vent(c, st);
+      outline(c, st);
+      gauges(c, st);
+    }
+
+    // Past the hold, cross-fade the end state (frame 60) back to the cool opening (frame 1).
+    var next = null;
+    function draw(v, f) {
+      if (f <= HOLD_FRAME) { scene(ctx, v, f); return; }
+      scene(ctx, v, HOLD_FRAME);
+      if (!next || next.width !== canvas.width || next.height !== canvas.height) {
+        next = document.createElement('canvas');
+        next.width = canvas.width; next.height = canvas.height;
+      }
+      scene(next.getContext('2d'), v, 1);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.globalAlpha = sstep((f - HOLD_FRAME) / (LAST_FRAME + 1 - HOLD_FRAME));
+      ctx.drawImage(next, 0, 0);
+      ctx.globalAlpha = 1;
     }
 
     return { resize: resize, draw: draw };
