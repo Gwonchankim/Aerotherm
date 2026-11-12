@@ -62,6 +62,15 @@ Not tokens, but still open:
 - The hero's two buttons sit side by side. The Contact section is one button to the Google Form; the unconnected form, the place block and the contact details are removed.
 - The header is sticky, and its links collapse into a menu below 1200 px. The two application images are flat zoom-sequence diagrams (`design/assets/application-*-diagram.png`, drawn from `prompts/aerotherm-application-diagrams.md`) in a shared 16:9 frame, with a one-line legend for the pale blue boards.
 
+**Unslop polish**
+
+- Polished with the unslop skill (`.claude/skills/unslop`, by Damir Sokolovsky, CC BY 4.0), in its polish mode: the palette, type families, layout and visuals stay.
+- Labels are sentence case at weight 500, with no wide tracking. Headings are weight 500; only h1 and h2 keep tight tracking. "Core function" is a quiet text label instead of an uppercase pill, and the product kicker is gone.
+- Technology: the radiation card spans the row (diagram left, text right from 1100 px), and the other three principles share the next row.
+- Icons are static and take the secondary text color; only the diagrams that explain a mechanism move.
+- The hero text is centred against the animation, and the Product section no longer repeats the hero's module drawing.
+- Spacing and sizes sit on the 4 px grid, inner panels use a 4 px radius inside 8 px cards, and transitions share one curve (`--ease`).
+
 **Propagation animation**
 
 - The canvases show a crop of the 1200 × 675 scene (x 140 to 1020), so the module fills about 80% of the canvas. The no-JavaScript images are cropped the same way.
