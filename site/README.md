@@ -60,7 +60,7 @@ Not tokens, but still open:
 - The comparison's controls sit above the two animations. Below 820 px only one animation shows at a time, with a switch ("No board" / "With AeroTherm") that keeps the same frame.
 - About shows three facts (founded, location, applications) instead of an icon row. The R&D lab render is removed until there are real sample or test photos.
 - The hero's two buttons sit side by side. The Contact section is one button to the Google Form; the unconnected form, the place block and the contact details are removed.
-- The header is sticky, and its links collapse into a menu below 1200 px. The two application images are flat zoom-sequence diagrams (`design/assets/application-*-diagram.png`, drawn from `prompts/aerotherm-application-diagrams.md`) in a shared 16:9 frame, with a one-line legend for the pale blue boards.
+- The header is sticky, and its links collapse into a menu below 1200 px. The two application images are photoreal cutaway renders (`design/assets/application-*-render.png`, generated from `prompts/aerotherm-application-renders.md`) in a shared 16:9 frame. `design-claude/source/application_renders.py` makes the page's WebP files: it scales the ESS rack to 87.5% so both renders have the same margins, and maps their background to the page background. The one-line legend names the pale blue boards and the orange cell in thermal runaway, which could otherwise read as a cell in orange film. Known liberties in the renders: the front busbar is drawn as one rail across several cells (real modules link neighbouring terminals), and the lifted board passes under it.
 
 **Unslop polish**
 

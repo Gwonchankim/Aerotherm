@@ -37,6 +37,10 @@ design/
 │   ├── board-material.png
 │   ├── application-ev.png
 │   ├── application-ess.png
+│   ├── application-ev-diagram.png       earlier site images (flat zoom diagrams)
+│   ├── application-ess-diagram.png
+│   ├── application-ev-render.png        current site images (photoreal cutaway renders)
+│   ├── application-ess-render.png
 │   └── lab-concept.png
 └── fonts/
     ├── Manrope.ttf
